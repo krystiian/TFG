@@ -62,19 +62,23 @@ public class MyAlgorithms {
         Document document = Jsoup.parse(s);
         if(document.getElementsByAttribute("xml:lang").attr("xml:lang").length() > 0)
         {
-            String langCode = document.getElementsByAttribute("xml:lang").attr("xml:lang").substring(0, 2);
-            Locale loc = new Locale(langCode);
-            return loc.getDisplayLanguage();
+            System.out.print("xml:lang ");
+            return codeToLang(document.getElementsByAttribute("xml:lang").attr("xml:lang").substring(0, 2));
         }
         else if(document.getElementsByAttribute("lang").attr("lang").length() > 0 ) 
         {
-            String langCode = document.getElementsByAttribute("lang").attr("lang").toLowerCase().substring(0, 2);
-            Locale loc = new Locale(langCode);
-            return loc.getDisplayLanguage();
+            System.out.print("lang ");
+            codeToLang(document.getElementsByAttribute("lang").attr("lang").toLowerCase().substring(0, 2));
         }
+        else if(document.getElementsByTag("p").size() > 0)
+        {
+            System.out.println("p ");
+            LanguageIdentifier languageIdentifier = new LanguageIdentifier(document.getElementsByTag("p").text().replaceAll("[^\\p{L}\\p{Nd}]+|[0-9]|\\s+", " "));
+            return codeToLang(languageIdentifier.getLanguage());
+        }
+        System.out.print("title ");
         LanguageIdentifier languageIdentifier = new LanguageIdentifier(htmlParseData.getTitle().replaceAll("\\s+", " "));
-        System.out.println(htmlParseData.getTitle().replaceAll("\\s+", " "));
-        return languageIdentifier.getLanguage();
+        return codeToLang(languageIdentifier.getLanguage());
     }
     
     public void printAllEmails(List l)
@@ -87,5 +91,11 @@ public class MyAlgorithms {
             }
         else System.out.println("None");
         System.out.println(""); 
+    }
+    
+    public String codeToLang(String code)
+    {
+        Locale loc = new Locale(code);
+        return loc.getDisplayLanguage();
     }
   }

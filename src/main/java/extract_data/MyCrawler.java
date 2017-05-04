@@ -39,7 +39,7 @@ public class MyCrawler extends WebCrawler {
      public boolean shouldVisit(Page referringPage, WebURL url) {
          String href = url.getURL().toLowerCase();
          return !FILTERS.matcher(href).matches()
-                && (href.startsWith("https://www.upf.edu/") || href.startsWith("http://rectan.es.tl/lista-de-correos-electronicos.htm"));
+                && (href.startsWith("http://www.tecnonews.info/") || href.startsWith("http://www.tecnonews.info/"));
      }
 
      /**
