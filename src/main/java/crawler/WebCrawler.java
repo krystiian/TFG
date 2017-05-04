@@ -400,13 +400,13 @@ public class WebCrawler implements Runnable {
                                 webURL.setDocid(docIdServer.getNewDocID(movedToUrl));
                                 frontier.schedule(webURL);
                             } else {
-                                /*logger.debug(
+                                logger.debug(
                                     "Not visiting: {} as per the server's \"robots.txt\" policy",
-                                    webURL.getURL());*/
+                                    webURL.getURL());
                             }
                         } else {
-                            /*logger.debug("Not visiting: {} as per your \"shouldVisit\" policy",
-                                         webURL.getURL());*/
+                            logger.debug("Not visiting: {} as per your \"shouldVisit\" policy",
+                                         webURL.getURL());
                         }
                     }
                 } else { // All other http codes other than 3xx & 200

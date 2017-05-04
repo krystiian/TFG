@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 package analisy_algorithms;
-
+ 
 import com.google.common.base.Optional;
 import crawler.HtmlParseData;
 import crawler.Page;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import static javax.ws.rs.client.Entity.html;
+import org.apache.tika.language.LanguageIdentifier;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -35,10 +37,11 @@ public class MyAlgorithms {
 
     private final static Pattern pattern = Pattern.compile("[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}");
     
-    public List fetchEmails(String s)
+    public List detectEmails(Page p)
     {
+        String s = ((HtmlParseData) p.getParseData()).getText();
         List emailList = new ArrayList();
-        String[] b = s.split("\\s+");
+        String[] b = s.replaceAll(","," ").split("\\s+");
         for(int i = 0; i < b.length; ++i)
         {   
             if(b[i].contains("@"))
@@ -52,25 +55,37 @@ public class MyAlgorithms {
         return emailList;
     } 
     
-    public String fetchLang(String s)
+    public String detectLanguage(Page p)
     {
-        /*
-        HtmlParseData pd = (HtmlParseData) p.getParseData();
-        String s = pd.getHtml();
-        String[] b = s.replaceAll("\\s+,", "").replaceAll("\""," \" ").split("\\s+|-");
-        for(int i = 0; i < b.length; ++i) if(b[i].equals("lang=")) return b[i+2];
-        */
+        HtmlParseData htmlParseData = (HtmlParseData) p.getParseData();
+        String s = htmlParseData.getHtml();
         Document document = Jsoup.parse(s);
-        return document.getElementsByAttribute("lang").attr("lang"); 
+        if(document.getElementsByAttribute("xml:lang").attr("xml:lang").length() > 0)
+        {
+            String langCode = document.getElementsByAttribute("xml:lang").attr("xml:lang").substring(0, 2);
+            Locale loc = new Locale(langCode);
+            return loc.getDisplayLanguage();
+        }
+        else if(document.getElementsByAttribute("lang").attr("lang").length() > 0 ) 
+        {
+            String langCode = document.getElementsByAttribute("lang").attr("lang").toLowerCase().substring(0, 2);
+            Locale loc = new Locale(langCode);
+            return loc.getDisplayLanguage();
+        }
+        LanguageIdentifier languageIdentifier = new LanguageIdentifier(htmlParseData.getTitle().replaceAll("\\s+", " "));
+        System.out.println(htmlParseData.getTitle().replaceAll("\\s+", " "));
+        return languageIdentifier.getLanguage();
     }
-    
     
     public void printAllEmails(List l)
     {
         if(l.size() > 0)
-            for(int i = 0; i < l.size(); ++i) System.out.print(l.get(i).toString() + " ");
+            for(int i = 0; i < l.size(); ++i)
+            {
+                System.out.print(l.get(i).toString());
+                if(i < l.size()-1) System.out.print(",");   
+            }
+        else System.out.println("None");
+        System.out.println(""); 
     }
-        
-    public void printLang(String s){System.out.println(s);}
-    
   }

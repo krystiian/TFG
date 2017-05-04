@@ -18,7 +18,7 @@ public class Controller {
             return;
         }
         String crawlStorageFolder = args[0];
-        int numberOfCrawlers = 5;   
+        int numberOfCrawlers = 1;   
         
         CrawlConfig config = new CrawlConfig();
         config.setMaxDepthOfCrawling(2);
@@ -40,7 +40,7 @@ public class Controller {
          * URLs that are fetched and then the crawler starts following links
          * which are found in these pages
          */
-        controller.addSeed("https://www.allaboutbirds.org/");
+        controller.addSeed("https://www.upf.edu/");
         /*
          * Start the crawl. This is a blocking operation, meaning that your code
          * will reach the line after this only when crawling is finished.

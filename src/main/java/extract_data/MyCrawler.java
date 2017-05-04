@@ -13,14 +13,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.tika.language.LanguageIdentifier;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 
 
 public class MyCrawler extends WebCrawler {
-
-    private int value = 0;
     private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|gif|jpg"
                                                            + "|png|mp3|mp3|zip|gz))$");
     
@@ -40,7 +39,7 @@ public class MyCrawler extends WebCrawler {
      public boolean shouldVisit(Page referringPage, WebURL url) {
          String href = url.getURL().toLowerCase();
          return !FILTERS.matcher(href).matches()
-                && (href.startsWith("https://www.allaboutbirds.org/") || href.startsWith("http://www.forocoches.com"));
+                && (href.startsWith("https://www.upf.edu/") || href.startsWith("http://rectan.es.tl/lista-de-correos-electronicos.htm"));
      }
 
      /**
@@ -48,24 +47,20 @@ public class MyCrawler extends WebCrawler {
       * to be processed by your program.
       */
      @Override
-     public void visit(Page page) {    
-         System.out.println(this.value);
+     public void visit(Page page) {
          String url = page.getWebURL().getURL();
-                  
          if (page.getParseData() instanceof HtmlParseData) {
-             ++this.value;
              HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
+             
              String text = htmlParseData.getText();
-             String html = htmlParseData.getHtml();        
+             String html = htmlParseData.getHtml();  
+             String title = htmlParseData.getTitle();
              Set<WebURL> links = htmlParseData.getOutgoingUrls();
-
-             text = text.replaceAll("\\s+,|,", " ");
-             html = html.replaceAll("\\s+,|,", " ");
              
-             //System.out.println(page.getLanguage());
-             
-             algorithms.printLang(algorithms.fetchLang(html));
-             algorithms.printAllEmails(algorithms.fetchEmails(text));
+             System.out.println(url);
+             System.out.println("LANG: " + algorithms.detectLanguage(page));
+             System.out.print("EMAILS: ");
+             algorithms.printAllEmails(algorithms.detectEmails(page));
 
              
              /*System.out.println("Html length: " + html.length());
