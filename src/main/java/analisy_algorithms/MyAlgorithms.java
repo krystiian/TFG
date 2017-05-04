@@ -23,8 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.text.Document;
+import static javax.ws.rs.client.Entity.html;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 /**
  *
@@ -37,7 +38,7 @@ public class MyAlgorithms {
     public List fetchEmails(String s)
     {
         List emailList = new ArrayList();
-        String[] b = s.replaceAll("\\s+,|,", " ").split("\\s+");
+        String[] b = s.split("\\s+");
         for(int i = 0; i < b.length; ++i)
         {   
             if(b[i].contains("@"))
@@ -49,24 +50,27 @@ public class MyAlgorithms {
             }
         }
         return emailList;
+    } 
+    
+    public String fetchLang(String s)
+    {
+        /*
+        HtmlParseData pd = (HtmlParseData) p.getParseData();
+        String s = pd.getHtml();
+        String[] b = s.replaceAll("\\s+,", "").replaceAll("\""," \" ").split("\\s+|-");
+        for(int i = 0; i < b.length; ++i) if(b[i].equals("lang=")) return b[i+2];
+        */
+        Document document = Jsoup.parse(s);
+        return document.getElementsByAttribute("lang").attr("lang"); 
     }
+    
     
     public void printAllEmails(List l)
     {
         if(l.size() > 0)
             for(int i = 0; i < l.size(); ++i) System.out.print(l.get(i).toString() + " ");
     }
-    
-    
-    public String fetchLang(Page p)
-    {
-        HtmlParseData pd = (HtmlParseData) p.getParseData();
-        String s = pd.getHtml();
-        String[] b = s.replaceAll("\\s+,", "").replaceAll("\""," \" ").split("\\s+|-");
-        for(int i = 0; i < b.length; ++i) if(b[i].equals("lang=")) return b[i+2];
-        return p.getLanguage();
-    }
-    
+        
     public void printLang(String s){System.out.println(s);}
     
   }

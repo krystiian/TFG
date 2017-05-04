@@ -13,7 +13,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.text.Document;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 
 
@@ -39,7 +40,7 @@ public class MyCrawler extends WebCrawler {
      public boolean shouldVisit(Page referringPage, WebURL url) {
          String href = url.getURL().toLowerCase();
          return !FILTERS.matcher(href).matches()
-                && (href.startsWith("https://www.forocoches.com") || href.startsWith("http://www.forocoches.com"));
+                && (href.startsWith("https://www.allaboutbirds.org/") || href.startsWith("http://www.forocoches.com"));
      }
 
      /**
@@ -55,13 +56,15 @@ public class MyCrawler extends WebCrawler {
              ++this.value;
              HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
              String text = htmlParseData.getText();
-             String html = htmlParseData.getHtml();
-             System.out.println("URL: " + url + "\nLenght = " + text.length());            
+             String html = htmlParseData.getHtml();        
              Set<WebURL> links = htmlParseData.getOutgoingUrls();
 
+             text = text.replaceAll("\\s+,|,", " ");
+             html = html.replaceAll("\\s+,|,", " ");
+             
              //System.out.println(page.getLanguage());
              
-             algorithms.printLang(algorithms.fetchLang(page));
+             algorithms.printLang(algorithms.fetchLang(html));
              algorithms.printAllEmails(algorithms.fetchEmails(text));
 
              
