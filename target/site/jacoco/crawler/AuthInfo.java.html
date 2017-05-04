@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthInfo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TFG</a> &gt; <a href="index.source.html" class="el_package">crawler</a> &gt; <span class="el_source">AuthInfo.java</span></div><h1>AuthInfo.java</h1><pre class="source lang-java linenums">package crawler;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.swing.text.html.FormSubmitEvent.MethodType;
+
+/**
+ * Created by Avi Hayun on 11/23/2014.
+ *
+ * Abstract class containing authentication information needed to login into a user/password
+ * protected site&lt;br&gt;
+ * This class should be extended by specific authentication types like form authentication and
+ * basic authentication
+ * etc&lt;br&gt;
+ * &lt;br&gt;
+ * This class contains all of the mutual authentication data for all authentication types
+ */
+public abstract class AuthInfo {
+<span class="nc" id="L20">    public enum AuthenticationType {</span>
+<span class="nc" id="L21">        BASIC_AUTHENTICATION,</span>
+<span class="nc" id="L22">        FORM_AUTHENTICATION,</span>
+<span class="nc" id="L23">        NT_AUTHENTICATION</span>
+    }
+
+    protected AuthenticationType authenticationType;
+    protected MethodType httpMethod;
+    protected String protocol;
+    protected String host;
+    protected String loginTarget;
+    protected int port;
+    protected String username;
+    protected String password;
+
+    /** Constructs a new AuthInfo. */
+<span class="nc" id="L36">    public AuthInfo() {</span>
+<span class="nc" id="L37">    }</span>
+
+    /**
+     * This constructor should only be used by extending classes
+     *
+     * @param authenticationType Pick the one which matches your authentication
+     * @param httpMethod Choose POST / GET
+     * @param loginUrl Full URL of the login page
+     * @param username Username for Authentication
+     * @param password Password for Authentication
+     *
+     * @throws MalformedURLException Make sure your URL is valid
+     */
+    protected AuthInfo(AuthenticationType authenticationType, MethodType httpMethod,
+                       String loginUrl, String username, String password)
+<span class="nc" id="L52">        throws MalformedURLException {</span>
+<span class="nc" id="L53">        this.authenticationType = authenticationType;</span>
+<span class="nc" id="L54">        this.httpMethod = httpMethod;</span>
+<span class="nc" id="L55">        URL url = new URL(loginUrl);</span>
+<span class="nc" id="L56">        this.protocol = url.getProtocol();</span>
+<span class="nc" id="L57">        this.host = url.getHost();</span>
+<span class="nc" id="L58">        this.port = url.getDefaultPort();</span>
+<span class="nc" id="L59">        this.loginTarget = url.getFile();</span>
+
+<span class="nc" id="L61">        this.username = username;</span>
+<span class="nc" id="L62">        this.password = password;</span>
+<span class="nc" id="L63">    }</span>
+
+    /**
+     * @return Authentication type (BASIC, FORM)
+     */
+    public AuthenticationType getAuthenticationType() {
+<span class="nc" id="L69">        return authenticationType;</span>
+    }
+
+    /**
+     *
+     * @param authenticationType Should be set only by extending classes (BASICAuthInfo,
+     * FORMAuthInfo)
+     */
+    public void setAuthenticationType(AuthenticationType authenticationType) {
+<span class="nc" id="L78">        this.authenticationType = authenticationType;</span>
+<span class="nc" id="L79">    }</span>
+
+    /**
+     *
+     * @return httpMethod (POST, GET)
+     */
+    public MethodType getHttpMethod() {
+<span class="nc" id="L86">        return httpMethod;</span>
+    }
+
+    /**
+     * @param httpMethod Should be set by extending classes (POST, GET)
+     */
+    public void setHttpMethod(MethodType httpMethod) {
+<span class="nc" id="L93">        this.httpMethod = httpMethod;</span>
+<span class="nc" id="L94">    }</span>
+
+    /**
+     * @return protocol type (http, https)
+     */
+    public String getProtocol() {
+<span class="nc" id="L100">        return protocol;</span>
+    }
+
+    /**
+     * @param protocol Don't set this one unless you know what you are doing (protocol: http, https)
+     */
+    public void setProtocol(String protocol) {
+<span class="nc" id="L107">        this.protocol = protocol;</span>
+<span class="nc" id="L108">    }</span>
+
+    /**
+     * @return host (www.sitename.com)
+     */
+    public String getHost() {
+<span class="nc" id="L114">        return host;</span>
+    }
+
+    /**
+     * @param host Don't set this one unless you know what you are doing (sets the domain name)
+     */
+    public void setHost(String host) {
+<span class="nc" id="L121">        this.host = host;</span>
+<span class="nc" id="L122">    }</span>
+
+    /**
+     * @return file/path which is the rest of the url after the domain name (eg: /login.php)
+     */
+    public String getLoginTarget() {
+<span class="nc" id="L128">        return loginTarget;</span>
+    }
+
+    /**
+     * @param loginTarget Don't set this one unless you know what you are doing (eg: /login.php)
+     */
+    public void setLoginTarget(String loginTarget) {
+<span class="nc" id="L135">        this.loginTarget = loginTarget;</span>
+<span class="nc" id="L136">    }</span>
+
+    /**
+     * @return port number (eg: 80, 443)
+     */
+    public int getPort() {
+<span class="nc" id="L142">        return port;</span>
+    }
+
+    /**
+     * @param port Don't set this one unless you know what you are doing (eg: 80, 443)
+     */
+    public void setPort(int port) {
+<span class="nc" id="L149">        this.port = port;</span>
+<span class="nc" id="L150">    }</span>
+
+    /**
+     * @return username used for Authentication
+     */
+    public String getUsername() {
+<span class="nc" id="L156">        return username;</span>
+    }
+
+    /**
+     * @param username username used for Authentication
+     */
+    public void setUsername(String username) {
+<span class="nc" id="L163">        this.username = username;</span>
+<span class="nc" id="L164">    }</span>
+
+    /**
+     * @return password used for Authentication
+     */
+    public String getPassword() {
+<span class="nc" id="L170">        return password;</span>
+    }
+
+    /**
+     * @param password password used for Authentication
+     */
+    public void setPassword(String password) {
+<span class="nc" id="L177">        this.password = password;</span>
+<span class="nc" id="L178">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

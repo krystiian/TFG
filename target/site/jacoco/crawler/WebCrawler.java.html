@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WebCrawler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TFG</a> &gt; <a href="index.source.html" class="el_package">crawler</a> &gt; <span class="el_source">WebCrawler.java</span></div><h1>WebCrawler.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package crawler;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import org.apache.http.HttpStatus;
+import org.apache.http.impl.EnglishReasonPhraseCatalog;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+/**
+ * WebCrawler class in the Runnable class that is executed by each crawler thread.
+ *
+ * @author Yasser Ganjisaffar
+ */
+<span class="nc" id="L35">public class WebCrawler implements Runnable {</span>
+
+<span class="nc" id="L37">    protected static final Logger logger = LoggerFactory.getLogger(WebCrawler.class);</span>
+
+    /**
+     * The id associated to the crawler thread running this instance
+     */
+    protected int myId;
+
+    /**
+     * The controller instance that has created this crawler thread. This
+     * reference to the controller can be used for getting configurations of the
+     * current crawl or adding new seeds during runtime.
+     */
+    protected CrawlController myController;
+
+    /**
+     * The thread within which this crawler instance is running.
+     */
+    private Thread myThread;
+
+    /**
+     * The parser that is used by this crawler instance to parse the content of the fetched pages.
+     */
+    private Parser parser;
+
+    /**
+     * The fetcher that is used by this crawler instance to fetch the content of pages from the web.
+     */
+    private PageFetcher pageFetcher;
+
+    /**
+     * The RobotstxtServer instance that is used by this crawler instance to
+     * determine whether the crawler is allowed to crawl the content of each page.
+     */
+    private RobotstxtServer robotstxtServer;
+
+    /**
+     * The DocIDServer that is used by this crawler instance to map each URL to a unique docid.
+     */
+    private DocIDServer docIdServer;
+
+    /**
+     * The Frontier object that manages the crawl queue.
+     */
+    private Frontier frontier;
+
+    /**
+     * Is the current crawler instance waiting for new URLs? This field is
+     * mainly used by the controller to detect whether all of the crawler
+     * instances are waiting for new URLs and therefore there is no more work
+     * and crawling can be stopped.
+     */
+    private boolean isWaitingForNewURLs;
+
+    /**
+     * Initializes the current instance of the crawler
+     *
+     * @param id
+     *            the id of this crawler instance
+     * @param crawlController
+     *            the controller that manages this crawling session
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     */
+    public void init(int id, CrawlController crawlController)
+        throws InstantiationException, IllegalAccessException {
+<span class="nc" id="L102">        this.myId = id;</span>
+<span class="nc" id="L103">        this.pageFetcher = crawlController.getPageFetcher();</span>
+<span class="nc" id="L104">        this.robotstxtServer = crawlController.getRobotstxtServer();</span>
+<span class="nc" id="L105">        this.docIdServer = crawlController.getDocIdServer();</span>
+<span class="nc" id="L106">        this.frontier = crawlController.getFrontier();</span>
+<span class="nc" id="L107">        this.parser = new Parser(crawlController.getConfig());</span>
+<span class="nc" id="L108">        this.myController = crawlController;</span>
+<span class="nc" id="L109">        this.isWaitingForNewURLs = false;</span>
+<span class="nc" id="L110">    }</span>
+
+    /**
+     * Get the id of the current crawler instance
+     *
+     * @return the id of the current crawler instance
+     */
+    public int getMyId() {
+<span class="nc" id="L118">        return myId;</span>
+    }
+
+    public CrawlController getMyController() {
+<span class="nc" id="L122">        return myController;</span>
+    }
+
+    /**
+     * This function is called just before starting the crawl by this crawler
+     * instance. It can be used for setting up the data structures or
+     * initializations needed by this crawler instance.
+     */
+    public void onStart() {
+        // Do nothing by default
+        // Sub-classed can override this to add their custom functionality
+<span class="nc" id="L133">    }</span>
+
+    /**
+     * This function is called just before the termination of the current
+     * crawler instance. It can be used for persisting in-memory data or other
+     * finalization tasks.
+     */
+    public void onBeforeExit() {
+        // Do nothing by default
+        // Sub-classed can override this to add their custom functionality
+<span class="nc" id="L143">    }</span>
+
+    /**
+     * This function is called once the header of a page is fetched. It can be
+     * overridden by sub-classes to perform custom logic for different status
+     * codes. For example, 404 pages can be logged, etc.
+     *
+     * @param webUrl WebUrl containing the statusCode
+     * @param statusCode Html Status Code number
+     * @param statusDescription Html Status COde description
+     */
+    protected void handlePageStatusCode(WebURL webUrl, int statusCode, String statusDescription) {
+        // Do nothing by default
+        // Sub-classed can override this to add their custom functionality
+<span class="nc" id="L157">    }</span>
+
+    /**
+     * This function is called before processing of the page's URL
+     * It can be overridden by subclasses for tweaking of the url before processing it.
+     * For example, http://abc.com/def?a=123 - http://abc.com/def
+     *
+     * @param curURL current URL which can be tweaked before processing
+     * @return tweaked WebURL
+     */
+    protected WebURL handleUrlBeforeProcess(WebURL curURL) {
+<span class="nc" id="L168">        return curURL;</span>
+    }
+
+    /**
+     * This function is called if the content of a url is bigger than allowed size.
+     *
+     * @param urlStr - The URL which it's content is bigger than allowed size
+     */
+    protected void onPageBiggerThanMaxSize(String urlStr, long pageSize) {
+<span class="nc" id="L177">        logger.warn(&quot;Skipping a URL: {} which was bigger ( {} ) than max allowed size&quot;, urlStr,</span>
+<span class="nc" id="L178">                    pageSize);</span>
+<span class="nc" id="L179">    }</span>
+
+    /**
+     * This function is called if the crawler encounters a page with a 3xx status code
+     *
+     * @param page Partial page object
+     */
+    protected void onRedirectedStatusCode(Page page) {
+        //Subclasses can override this to add their custom functionality
+<span class="nc" id="L188">    }</span>
+
+    /**
+     * This function is called if the crawler encountered an unexpected http status code ( a
+     * status code other than 3xx)
+     *
+     * @param urlStr URL in which an unexpected error was encountered while crawling
+     * @param statusCode Html StatusCode
+     * @param contentType Type of Content
+     * @param description Error Description
+     */
+    protected void onUnexpectedStatusCode(String urlStr, int statusCode, String contentType,
+                                          String description) {
+<span class="nc" id="L201">        logger.warn(&quot;Skipping URL: {}, StatusCode: {}, {}, {}&quot;, urlStr, statusCode, contentType,</span>
+                    description);
+        // Do nothing by default (except basic logging)
+        // Sub-classed can override this to add their custom functionality
+<span class="nc" id="L205">    }</span>
+
+    /**
+     * This function is called if the content of a url could not be fetched.
+     *
+     * @param webUrl URL which content failed to be fetched
+     */
+    protected void onContentFetchError(WebURL webUrl) {
+<span class="nc" id="L213">        logger.warn(&quot;Can't fetch content of: {}&quot;, webUrl.getURL());</span>
+        // Do nothing by default (except basic logging)
+        // Sub-classed can override this to add their custom functionality
+<span class="nc" id="L216">    }</span>
+
+    /**
+     * This function is called when a unhandled exception was encountered during fetching
+     *
+     * @param webUrl URL where a unhandled exception occured
+     */
+    protected void onUnhandledException(WebURL webUrl, Throwable e) {
+<span class="nc bnc" id="L224" title="All 2 branches missed.">        String urlStr = (webUrl == null ? &quot;NULL&quot; : webUrl.getURL());</span>
+<span class="nc" id="L225">        logger.warn(&quot;Unhandled exception while fetching {}: {}&quot;, urlStr, e.getMessage());</span>
+<span class="nc" id="L226">        logger.info(&quot;Stacktrace: &quot;, e);</span>
+        // Do nothing by default (except basic logging)
+        // Sub-classed can override this to add their custom functionality
+<span class="nc" id="L229">    }</span>
+
+    /**
+     * This function is called if there has been an error in parsing the content.
+     *
+     * @param webUrl URL which failed on parsing
+     */
+    protected void onParseError(WebURL webUrl) {
+<span class="nc" id="L237">        logger.warn(&quot;Parsing error of: {}&quot;, webUrl.getURL());</span>
+        // Do nothing by default (Except logging)
+        // Sub-classed can override this to add their custom functionality
+<span class="nc" id="L240">    }</span>
+
+    /**
+     * The CrawlController instance that has created this crawler instance will
+     * call this function just before terminating this crawler thread. Classes
+     * that extend WebCrawler can override this function to pass their local
+     * data to their controller. The controller then puts these local data in a
+     * List that can then be used for processing the local data of crawlers (if needed).
+     *
+     * @return currently NULL
+     */
+    public Object getMyLocalData() {
+<span class="nc" id="L252">        return null;</span>
+    }
+
+    @Override
+    public void run() {
+<span class="nc" id="L257">        onStart();</span>
+        while (true) {
+<span class="nc" id="L259">            List&lt;WebURL&gt; assignedURLs = new ArrayList&lt;&gt;(50);</span>
+<span class="nc" id="L260">            isWaitingForNewURLs = true;</span>
+<span class="nc" id="L261">            frontier.getNextURLs(50, assignedURLs);</span>
+<span class="nc" id="L262">            isWaitingForNewURLs = false;</span>
+<span class="nc bnc" id="L263" title="All 2 branches missed.">            if (assignedURLs.isEmpty()) {</span>
+<span class="nc bnc" id="L264" title="All 2 branches missed.">                if (frontier.isFinished()) {</span>
+<span class="nc" id="L265">                    return;</span>
+                }
+                try {
+<span class="nc" id="L268">                    Thread.sleep(3000);</span>
+<span class="nc" id="L269">                } catch (InterruptedException e) {</span>
+<span class="nc" id="L270">                    logger.error(&quot;Error occurred&quot;, e);</span>
+<span class="nc" id="L271">                }</span>
+            } else {
+<span class="nc bnc" id="L273" title="All 2 branches missed.">                for (WebURL curURL : assignedURLs) {</span>
+<span class="nc bnc" id="L274" title="All 2 branches missed.">                    if (myController.isShuttingDown()) {</span>
+<span class="nc" id="L275">                        logger.info(&quot;Exiting because of controller shutdown.&quot;);</span>
+<span class="nc" id="L276">                        return;</span>
+                    }
+<span class="nc bnc" id="L278" title="All 2 branches missed.">                    if (curURL != null) {</span>
+<span class="nc" id="L279">                        curURL = handleUrlBeforeProcess(curURL);</span>
+<span class="nc" id="L280">                        processPage(curURL);</span>
+<span class="nc" id="L281">                        frontier.setProcessed(curURL);</span>
+                    }
+<span class="nc" id="L283">                }</span>
+            }
+<span class="nc" id="L285">        }</span>
+    }
+
+    /**
+     * Classes that extends WebCrawler should overwrite this function to tell the
+     * crawler whether the given url should be crawled or not. The following
+     * default implementation indicates that all urls should be included in the crawl
+     * except those with a nofollow flag.
+     *
+     * @param url
+     *            the url which we are interested to know whether it should be
+     *            included in the crawl or not.
+     * @param referringPage
+     *           The Page in which this url was found.
+     * @return if the url should be included in the crawl it returns true,
+     *         otherwise false is returned.
+     */
+    public boolean shouldVisit(Page referringPage, WebURL url) {
+<span class="nc bnc" id="L303" title="All 2 branches missed.">        if (myController.getConfig().isRespectNoFollow()) {</span>
+<span class="nc bnc" id="L304" title="All 2 branches missed.">            return !((referringPage != null &amp;&amp;</span>
+<span class="nc bnc" id="L305" title="All 2 branches missed.">                    referringPage.getContentType() != null &amp;&amp;</span>
+<span class="nc bnc" id="L306" title="All 2 branches missed.">                    referringPage.getContentType().contains(&quot;html&quot;) &amp;&amp;</span>
+<span class="nc" id="L307">                    ((HtmlParseData)referringPage.getParseData())</span>
+<span class="nc" id="L308">                        .getMetaTagValue(&quot;robots&quot;)</span>
+<span class="nc bnc" id="L309" title="All 2 branches missed.">                        .contains(&quot;nofollow&quot;)) ||</span>
+<span class="nc bnc" id="L310" title="All 2 branches missed.">                    url.getAttribute(&quot;rel&quot;).contains(&quot;nofollow&quot;));</span>
+        }
+
+<span class="nc" id="L313">        return true;</span>
+    }
+
+    /**
+     * Determine whether links found at the given URL should be added to the queue for crawling.
+     * By default this method returns true always, but classes that extend WebCrawler can
+     * override it in order to implement particular policies about which pages should be
+     * mined for outgoing links and which should not.
+     *
+     * If links from the URL are not being followed, then we are not operating as
+     * a web crawler and need not check robots.txt before fetching the single URL.
+     * (see definition at http://www.robotstxt.org/faq/what.html).  Thus URLs that
+     * return false from this method will not be subject to robots.txt filtering.
+     *
+     * @param url the URL of the page under consideration
+     * @return true if outgoing links from this page should be added to the queue.
+     */
+    protected boolean shouldFollowLinksIn(WebURL url) {
+<span class="nc" id="L331">        return true;</span>
+    }
+
+    /**
+     * Classes that extends WebCrawler should overwrite this function to process
+     * the content of the fetched and parsed page.
+     *
+     * @param page
+     *            the page object that is just fetched and parsed.
+     */
+    public void visit(Page page) {
+        // Do nothing by default
+        // Sub-classed should override this to add their custom functionality
+<span class="nc" id="L344">    }</span>
+
+    private void processPage(WebURL curURL) {
+<span class="nc" id="L347">        PageFetchResult fetchResult = null;</span>
+        try {
+<span class="nc bnc" id="L349" title="All 2 branches missed.">            if (curURL == null) {</span>
+<span class="nc" id="L350">                return;</span>
+            }
+
+<span class="nc" id="L353">            fetchResult = pageFetcher.fetchPage(curURL);</span>
+<span class="nc" id="L354">            int statusCode = fetchResult.getStatusCode();</span>
+<span class="nc" id="L355">            handlePageStatusCode(curURL, statusCode,</span>
+<span class="nc" id="L356">                                 EnglishReasonPhraseCatalog.INSTANCE.getReason(statusCode,</span>
+                                                                               Locale.ENGLISH));
+            // Finds the status reason for all known statuses
+
+<span class="nc" id="L360">            Page page = new Page(curURL);</span>
+<span class="nc" id="L361">            page.setFetchResponseHeaders(fetchResult.getResponseHeaders());</span>
+<span class="nc" id="L362">            page.setStatusCode(statusCode);</span>
+<span class="nc bnc" id="L363" title="All 4 branches missed.">            if (statusCode &lt; 200 ||</span>
+                statusCode &gt; 299) { // Not 2XX: 2XX status codes indicate success
+<span class="nc bnc" id="L365" title="All 12 branches missed.">                if (statusCode == HttpStatus.SC_MOVED_PERMANENTLY ||</span>
+                    statusCode == HttpStatus.SC_MOVED_TEMPORARILY ||
+                    statusCode == HttpStatus.SC_MULTIPLE_CHOICES ||
+                    statusCode == HttpStatus.SC_SEE_OTHER ||
+                    statusCode == HttpStatus.SC_TEMPORARY_REDIRECT ||
+                    statusCode == 308) { // is 3xx  todo
+                    // follow https://issues.apache.org/jira/browse/HTTPCORE-389
+
+<span class="nc" id="L373">                    page.setRedirect(true);</span>
+
+<span class="nc" id="L375">                    String movedToUrl = fetchResult.getMovedToUrl();</span>
+<span class="nc bnc" id="L376" title="All 2 branches missed.">                    if (movedToUrl == null) {</span>
+                        /*logger.warn(&quot;Unexpected error, URL: {} is redirected to NOTHING&quot;,
+                                    curURL);*/
+<span class="nc" id="L379">                        return;</span>
+                    }
+<span class="nc" id="L381">                    page.setRedirectedToUrl(movedToUrl);</span>
+<span class="nc" id="L382">                    onRedirectedStatusCode(page);</span>
+
+<span class="nc bnc" id="L384" title="All 2 branches missed.">                    if (myController.getConfig().isFollowRedirects()) {</span>
+<span class="nc" id="L385">                        int newDocId = docIdServer.getDocId(movedToUrl);</span>
+<span class="nc bnc" id="L386" title="All 2 branches missed.">                        if (newDocId &gt; 0) {</span>
+                            //logger.debug(&quot;Redirect page: {} is already seen&quot;, curURL);
+<span class="nc" id="L388">                            return;</span>
+                        }
+
+<span class="nc" id="L391">                        WebURL webURL = new WebURL();</span>
+<span class="nc" id="L392">                        webURL.setURL(movedToUrl);</span>
+<span class="nc" id="L393">                        webURL.setParentDocid(curURL.getParentDocid());</span>
+<span class="nc" id="L394">                        webURL.setParentUrl(curURL.getParentUrl());</span>
+<span class="nc" id="L395">                        webURL.setDepth(curURL.getDepth());</span>
+<span class="nc" id="L396">                        webURL.setDocid(-1);</span>
+<span class="nc" id="L397">                        webURL.setAnchor(curURL.getAnchor());</span>
+<span class="nc bnc" id="L398" title="All 2 branches missed.">                        if (shouldVisit(page, webURL)) {</span>
+<span class="nc bnc" id="L399" title="All 4 branches missed.">                            if (!shouldFollowLinksIn(webURL) || robotstxtServer.allows(webURL)) {</span>
+<span class="nc" id="L400">                                webURL.setDocid(docIdServer.getNewDocID(movedToUrl));</span>
+<span class="nc" id="L401">                                frontier.schedule(webURL);</span>
+                            } else {
+                                /*logger.debug(
+                                    &quot;Not visiting: {} as per the server's \&quot;robots.txt\&quot; policy&quot;,
+                                    webURL.getURL());*/
+                            }
+                        } else {
+                            /*logger.debug(&quot;Not visiting: {} as per your \&quot;shouldVisit\&quot; policy&quot;,
+                                         webURL.getURL());*/
+                        }
+                    }
+<span class="nc" id="L412">                } else { // All other http codes other than 3xx &amp; 200</span>
+<span class="nc" id="L413">                    String description =</span>
+<span class="nc" id="L414">                        EnglishReasonPhraseCatalog.INSTANCE.getReason(fetchResult.getStatusCode(),</span>
+                                                                      Locale.ENGLISH); // Finds
+                    // the status reason for all known statuses
+<span class="nc bnc" id="L417" title="All 2 branches missed.">                    String contentType = fetchResult.getEntity() == null ? &quot;&quot; :</span>
+<span class="nc bnc" id="L418" title="All 2 branches missed.">                                         fetchResult.getEntity().getContentType() == null ? &quot;&quot; :</span>
+<span class="nc" id="L419">                                         fetchResult.getEntity().getContentType().getValue();</span>
+<span class="nc" id="L420">                    onUnexpectedStatusCode(curURL.getURL(), fetchResult.getStatusCode(),</span>
+                                           contentType, description);
+<span class="nc" id="L422">                }</span>
+
+            } else { // if status code is 200
+<span class="nc bnc" id="L425" title="All 2 branches missed.">                if (!curURL.getURL().equals(fetchResult.getFetchedUrl())) {</span>
+<span class="nc bnc" id="L426" title="All 2 branches missed.">                    if (docIdServer.isSeenBefore(fetchResult.getFetchedUrl())) {</span>
+<span class="nc" id="L427">                        logger.debug(&quot;Redirect page: {} has already been seen&quot;, curURL);</span>
+<span class="nc" id="L428">                        return;</span>
+                    }
+<span class="nc" id="L430">                    curURL.setURL(fetchResult.getFetchedUrl());</span>
+<span class="nc" id="L431">                    curURL.setDocid(docIdServer.getNewDocID(fetchResult.getFetchedUrl()));</span>
+                }
+
+<span class="nc bnc" id="L434" title="All 2 branches missed.">                if (!fetchResult.fetchContent(page,</span>
+<span class="nc" id="L435">                                              myController.getConfig().getMaxDownloadSize())) {</span>
+<span class="nc" id="L436">                    throw new ContentFetchException();</span>
+                }
+
+<span class="nc bnc" id="L439" title="All 2 branches missed.">                if (page.isTruncated()) {</span>
+<span class="nc" id="L440">                    logger.warn(</span>
+                        &quot;Warning: unknown page size exceeded max-download-size, truncated to: &quot; +
+                        &quot;({}), at URL: {}&quot;,
+<span class="nc" id="L443">                        myController.getConfig().getMaxDownloadSize(), curURL.getURL());</span>
+                }
+
+<span class="nc" id="L446">                parser.parse(page, curURL.getURL());</span>
+
+<span class="nc bnc" id="L448" title="All 2 branches missed.">                if (shouldFollowLinksIn(page.getWebURL())) {</span>
+<span class="nc" id="L449">                    ParseData parseData = page.getParseData();</span>
+<span class="nc" id="L450">                    List&lt;WebURL&gt; toSchedule = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L451">                    int maxCrawlDepth = myController.getConfig().getMaxDepthOfCrawling();</span>
+<span class="nc bnc" id="L452" title="All 2 branches missed.">                    for (WebURL webURL : parseData.getOutgoingUrls()) {</span>
+<span class="nc" id="L453">                        webURL.setParentDocid(curURL.getDocid());</span>
+<span class="nc" id="L454">                        webURL.setParentUrl(curURL.getURL());</span>
+<span class="nc" id="L455">                        int newdocid = docIdServer.getDocId(webURL.getURL());</span>
+<span class="nc bnc" id="L456" title="All 2 branches missed.">                        if (newdocid &gt; 0) {</span>
+                            // This is not the first time that this Url is visited. So, we set the
+                            // depth to a negative number.
+<span class="nc" id="L459">                            webURL.setDepth((short) -1);</span>
+<span class="nc" id="L460">                            webURL.setDocid(newdocid);</span>
+                        } else {
+<span class="nc" id="L462">                            webURL.setDocid(-1);</span>
+<span class="nc" id="L463">                            webURL.setDepth((short) (curURL.getDepth() + 1));</span>
+<span class="nc bnc" id="L464" title="All 4 branches missed.">                            if ((maxCrawlDepth == -1) || (curURL.getDepth() &lt; maxCrawlDepth)) {</span>
+<span class="nc bnc" id="L465" title="All 2 branches missed.">                                if (shouldVisit(page, webURL)) {</span>
+<span class="nc bnc" id="L466" title="All 2 branches missed.">                                    if (robotstxtServer.allows(webURL)) {</span>
+<span class="nc" id="L467">                                        webURL.setDocid(docIdServer.getNewDocID(webURL.getURL()));</span>
+<span class="nc" id="L468">                                        toSchedule.add(webURL);</span>
+                                    } else {
+                                        /*logger.debug(
+                                            &quot;Not visiting: {} as per the server's \&quot;robots.txt\&quot; &quot; +
+                                            &quot;policy&quot;, webURL.getURL());*/
+                                    }
+                                } else {
+                                    /*logger.debug(
+                                        &quot;Not visiting: {} as per your \&quot;shouldVisit\&quot; policy&quot;,
+                                        webURL.getURL());*/
+                                }
+                            }
+                        }
+<span class="nc" id="L481">                    }</span>
+<span class="nc" id="L482">                    frontier.scheduleAll(toSchedule);</span>
+                } else {
+                    /*logger.debug(&quot;Not looking for links in page {}, &quot;
+                                 + &quot;as per your \&quot;shouldFollowLinksInPage\&quot; policy&quot;,
+                                 page.getWebURL().getURL());*/
+                }
+
+<span class="nc bnc" id="L489" title="All 2 branches missed.">                boolean noIndex = myController.getConfig().isRespectNoIndex() &amp;&amp;</span>
+<span class="nc bnc" id="L490" title="All 2 branches missed.">                    page.getContentType() != null &amp;&amp;</span>
+<span class="nc bnc" id="L491" title="All 2 branches missed.">                    page.getContentType().contains(&quot;html&quot;) &amp;&amp;</span>
+<span class="nc" id="L492">                    ((HtmlParseData)page.getParseData())</span>
+<span class="nc" id="L493">                        .getMetaTagValue(&quot;robots&quot;).</span>
+<span class="nc bnc" id="L494" title="All 2 branches missed.">                        contains(&quot;noindex&quot;);</span>
+
+<span class="nc bnc" id="L496" title="All 2 branches missed.">                if (!noIndex) {</span>
+<span class="nc" id="L497">                    visit(page);</span>
+                }
+            }
+<span class="nc" id="L500">        } catch (PageBiggerThanMaxSizeException e) {</span>
+<span class="nc" id="L501">            onPageBiggerThanMaxSize(curURL.getURL(), e.getPageSize());</span>
+<span class="nc" id="L502">        } catch (ParseException pe) {</span>
+<span class="nc" id="L503">            onParseError(curURL);</span>
+<span class="nc" id="L504">        } catch (ContentFetchException cfe) {</span>
+<span class="nc" id="L505">            onContentFetchError(curURL);</span>
+<span class="nc" id="L506">        } catch (NotAllowedContentException nace) {</span>
+            /*logger.debug(
+                &quot;Skipping: {} as it contains binary content which you configured not to crawl&quot;,
+                curURL.getURL());*/
+<span class="nc" id="L510">        } catch (Exception e) {</span>
+<span class="nc" id="L511">            onUnhandledException(curURL, e);</span>
+        } finally {
+<span class="nc bnc" id="L513" title="All 22 branches missed.">            if (fetchResult != null) {</span>
+<span class="nc" id="L514">                fetchResult.discardContentIfNotConsumed();</span>
+            }
+        }
+<span class="nc" id="L517">    }</span>
+
+    public Thread getThread() {
+<span class="nc" id="L520">        return myThread;</span>
+    }
+
+    public void setThread(Thread myThread) {
+<span class="nc" id="L524">        this.myThread = myThread;</span>
+<span class="nc" id="L525">    }</span>
+
+    public boolean isNotWaitingForNewURLs() {
+<span class="nc bnc" id="L528" title="All 2 branches missed.">        return !isWaitingForNewURLs;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

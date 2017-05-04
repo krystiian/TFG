@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RobotstxtConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TFG</a> &gt; <a href="index.source.html" class="el_package">crawler</a> &gt; <span class="el_source">RobotstxtConfig.java</span></div><h1>RobotstxtConfig.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package crawler;
+
+<span class="nc" id="L20">public class RobotstxtConfig {</span>
+
+    /**
+     * Should the crawler obey Robots.txt protocol? More info on Robots.txt is
+     * available at http://www.robotstxt.org/
+     */
+<span class="nc" id="L26">    private boolean enabled = true;</span>
+
+    /**
+     * user-agent name that will be used to determine whether some servers have
+     * specific rules for this agent name.
+     */
+<span class="nc" id="L32">    private String userAgentName = &quot;crawler4j&quot;;</span>
+
+    /**
+     * Whether to ignore positive user-agent discrimination. There are websties that use
+     * a white-list system where they explicitly allow Googlebot but disallow all other
+     * bots by a &quot;User-agent: * Disallow: /&quot; rule. Setting this setting to true
+     * will ignore the user-agent and apply the &quot;Allow&quot; rule to all user-agents.
+     * This can still be overridden when a robots.txt explicitly disallows the configured
+     * User-agent, as such a rule supersedes the generic rule.
+     */
+<span class="nc" id="L42">    private boolean ignoreUADiscrimination = false;</span>
+
+    /**
+     * The maximum number of hosts for which their robots.txt is cached.
+     */
+<span class="nc" id="L47">    private int cacheSize = 500;</span>
+
+    public boolean isEnabled() {
+<span class="nc" id="L50">        return enabled;</span>
+    }
+
+    public void setEnabled(boolean enabled) {
+<span class="nc" id="L54">        this.enabled = enabled;</span>
+<span class="nc" id="L55">    }</span>
+
+    public String getUserAgentName() {
+<span class="nc" id="L58">        return userAgentName;</span>
+    }
+
+    public void setUserAgentName(String userAgentName) {
+<span class="nc" id="L62">        this.userAgentName = userAgentName;</span>
+<span class="nc" id="L63">    }</span>
+
+    public int getCacheSize() {
+<span class="nc" id="L66">        return cacheSize;</span>
+    }
+
+    public void setCacheSize(int cacheSize) {
+<span class="nc" id="L70">        this.cacheSize = cacheSize;</span>
+<span class="nc" id="L71">    }</span>
+
+    public void setIgnoreUADiscrimination(boolean ignore) {
+<span class="nc" id="L74">        this.ignoreUADiscrimination = ignore;</span>
+<span class="nc" id="L75">    }</span>
+
+    public boolean getIgnoreUADiscrimination() {
+<span class="nc" id="L78">        return ignoreUADiscrimination;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

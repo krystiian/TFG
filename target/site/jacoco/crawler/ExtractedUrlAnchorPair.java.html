@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExtractedUrlAnchorPair.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TFG</a> &gt; <a href="index.source.html" class="el_package">crawler</a> &gt; <span class="el_source">ExtractedUrlAnchorPair.java</span></div><h1>ExtractedUrlAnchorPair.java</h1><pre class="source lang-java linenums">package crawler;
+
+import java.util.HashMap;
+import java.util.Map;
+
+<span class="nc" id="L6">public class ExtractedUrlAnchorPair {</span>
+
+    private String href;
+    private String anchor;
+    private String tag;
+<span class="nc" id="L11">    private Map&lt;String, String&gt; attributes = new HashMap&lt;String, String&gt;();</span>
+
+    public String getHref() {
+<span class="nc" id="L14">        return href;</span>
+    }
+
+    public void setHref(String href) {
+<span class="nc" id="L18">        this.href = href;</span>
+<span class="nc" id="L19">    }</span>
+
+    public String getAnchor() {
+<span class="nc" id="L22">        return anchor;</span>
+    }
+
+    public void setAnchor(String anchor) {
+<span class="nc" id="L26">        this.anchor = anchor;</span>
+<span class="nc" id="L27">    }</span>
+
+    public String getTag() {
+<span class="nc" id="L30">        return tag;</span>
+    }
+
+    public void setTag(String tag) {
+<span class="nc" id="L34">        this.tag = tag;</span>
+<span class="nc" id="L35">    }</span>
+
+    public Map&lt;String, String&gt; getAttributes() {
+<span class="nc" id="L38">        return attributes;</span>
+    }
+
+    public void setAttributes(Map&lt;String, String&gt; attributes) {
+<span class="nc" id="L42">        this.attributes = attributes;</span>
+<span class="nc" id="L43">    }</span>
+
+    public String getAttribute(String name) {
+<span class="nc" id="L46">        return attributes.get(name);</span>
+    }
+
+    public void setAttribute(String name, String val) {
+<span class="nc" id="L50">        attributes.put(name, val);</span>
+<span class="nc" id="L51">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

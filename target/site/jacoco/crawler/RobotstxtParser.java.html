@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RobotstxtParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TFG</a> &gt; <a href="index.source.html" class="el_package">crawler</a> &gt; <span class="el_source">RobotstxtParser.java</span></div><h1>RobotstxtParser.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package crawler;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * @author Yasser Ganjisaffar
+ */
+<span class="nc" id="L33">public class RobotstxtParser {</span>
+<span class="nc" id="L34">    private static final Logger logger = LoggerFactory.getLogger(RobotstxtParser.class);</span>
+<span class="nc" id="L35">    private static final Pattern RULE_PATTERN = Pattern.compile(&quot;(?i)^([A-Za-z\\-]+):(.*)&quot;);</span>
+<span class="nc" id="L36">    private static final Set&lt;String&gt; VALID_RULES = new HashSet&lt;String&gt;(</span>
+<span class="nc" id="L37">        Arrays.asList(&quot;allow&quot;, &quot;disallow&quot;, &quot;user-agent&quot;, &quot;crawl-delay&quot;, &quot;host&quot;, &quot;sitemap&quot;));</span>
+
+    public static HostDirectives parse(String content, RobotstxtConfig config) {
+<span class="nc" id="L40">        HostDirectives directives = new HostDirectives(config);</span>
+<span class="nc" id="L41">        StringTokenizer st = new StringTokenizer(content, &quot;\n\r&quot;);</span>
+
+<span class="nc" id="L43">        Set&lt;String&gt; userAgents = new HashSet&lt;String&gt;();</span>
+<span class="nc" id="L44">        UserAgentDirectives uaDirectives = null;</span>
+
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        while (st.hasMoreTokens()) {</span>
+<span class="nc" id="L47">            String line = st.nextToken();</span>
+
+            // Strip comments
+<span class="nc" id="L50">            int commentIndex = line.indexOf('#');</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">            if (commentIndex &gt; -1) {</span>
+<span class="nc" id="L52">                line = line.substring(0, commentIndex);</span>
+            }
+
+            // remove any html markup
+<span class="nc" id="L56">            line = line.replaceAll(&quot;&lt;[^&gt;]+&gt;&quot;, &quot;&quot;).trim();</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">            if (line.isEmpty()) {</span>
+<span class="nc" id="L58">                continue;</span>
+            }
+
+<span class="nc" id="L61">            Matcher m = RULE_PATTERN.matcher(line);</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">            if (m.matches()) {</span>
+<span class="nc" id="L63">                String rule = m.group(1).toLowerCase();</span>
+<span class="nc" id="L64">                String value = m.group(2).trim();</span>
+
+<span class="nc bnc" id="L66" title="All 2 branches missed.">                if (VALID_RULES.contains(rule)) {</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">                    if (rule.equals(&quot;user-agent&quot;)) {</span>
+<span class="nc" id="L68">                        String currentUserAgent = value.toLowerCase();</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">                        if (uaDirectives != null) {</span>
+                            // If uaDirectives is not null, this means that one or
+                            // more rules followed the User-agent: definition list
+                            // In that case, it's not allowed to add more user-agents,
+                            // so this is an entirely new set of directives.
+<span class="nc" id="L74">                            userAgents = new HashSet&lt;String&gt;();</span>
+<span class="nc" id="L75">                            directives.addDirectives(uaDirectives);</span>
+<span class="nc" id="L76">                            uaDirectives = null;</span>
+                        }
+<span class="nc" id="L78">                        userAgents.add(currentUserAgent);</span>
+<span class="nc" id="L79">                    } else {</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">                        if (uaDirectives == null) {</span>
+                            // No &quot;User-agent&quot;: clause defaults to
+                            // wildcard UA
+<span class="nc bnc" id="L83" title="All 2 branches missed.">                            if (userAgents.isEmpty()) {</span>
+<span class="nc" id="L84">                                userAgents.add(&quot;*&quot;);</span>
+                            }
+<span class="nc" id="L86">                            uaDirectives = new UserAgentDirectives(userAgents);</span>
+                        }
+<span class="nc" id="L88">                        uaDirectives.add(rule, value);</span>
+                    }
+                } else {
+<span class="nc" id="L91">                    logger.info(&quot;Unrecognized rule in robots.txt: {}&quot;, rule);</span>
+                }
+<span class="nc" id="L93">            } else {</span>
+<span class="nc" id="L94">                logger.debug(&quot;Unrecognized line in robots.txt: {}&quot;, line);</span>
+            }
+<span class="nc" id="L96">        }</span>
+
+<span class="nc" id="L98">        directives.addDirectives(uaDirectives);</span>
+<span class="nc" id="L99">        return directives;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FormAuthInfo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TFG</a> &gt; <a href="index.source.html" class="el_package">crawler</a> &gt; <span class="el_source">FormAuthInfo.java</span></div><h1>FormAuthInfo.java</h1><pre class="source lang-java linenums">package crawler;
+
+import java.net.MalformedURLException;
+
+import javax.swing.text.html.FormSubmitEvent.MethodType;
+
+/**
+ * Created by Avi Hayun on 11/25/2014.
+ *
+ * FormAuthInfo contains the authentication information needed for FORM authentication (extending
+ * AuthInfo which has
+ * all common auth info in it)
+ * Basically, this is the most common authentication, where you will get to a site and you will
+ * need to enter a
+ * username and password into an HTML form
+ */
+public class FormAuthInfo extends AuthInfo {
+
+    private String usernameFormStr;
+    private String passwordFormStr;
+
+    /**
+     * Constructor
+     *
+     * @param username Username to login with
+     * @param password Password to login with
+     * @param loginUrl Full login URL, starting with &quot;http&quot;... ending with the full URL
+     * @param usernameFormStr &quot;Name&quot; attribute of the username form field
+     * @param passwordFormStr &quot;Name&quot; attribute of the password form field
+     *
+     * @throws MalformedURLException Make sure your URL is valid
+     */
+    public FormAuthInfo(String username, String password, String loginUrl, String usernameFormStr,
+                        String passwordFormStr) throws MalformedURLException {
+<span class="nc" id="L35">        super(AuthenticationType.FORM_AUTHENTICATION, MethodType.POST, loginUrl, username,</span>
+              password);
+
+<span class="nc" id="L38">        this.usernameFormStr = usernameFormStr;</span>
+<span class="nc" id="L39">        this.passwordFormStr = passwordFormStr;</span>
+<span class="nc" id="L40">    }</span>
+
+    /**
+     * @return username html &quot;name&quot; form attribute
+     */
+    public String getUsernameFormStr() {
+<span class="nc" id="L46">        return usernameFormStr;</span>
+    }
+
+    /**
+     * @param usernameFormStr username html &quot;name&quot; form attribute
+     */
+    public void setUsernameFormStr(String usernameFormStr) {
+<span class="nc" id="L53">        this.usernameFormStr = usernameFormStr;</span>
+<span class="nc" id="L54">    }</span>
+
+    /**
+     * @return password html &quot;name&quot; form attribute
+     */
+    public String getPasswordFormStr() {
+<span class="nc" id="L60">        return passwordFormStr;</span>
+    }
+
+    /**
+     * @param passwordFormStr password html &quot;name&quot; form attribute
+     */
+    public void setPasswordFormStr(String passwordFormStr) {
+<span class="nc" id="L67">        this.passwordFormStr = passwordFormStr;</span>
+<span class="nc" id="L68">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

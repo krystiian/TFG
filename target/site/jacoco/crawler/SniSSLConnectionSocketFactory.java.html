@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SniSSLConnectionSocketFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TFG</a> &gt; <a href="index.source.html" class="el_package">crawler</a> &gt; <span class="el_source">SniSSLConnectionSocketFactory.java</span></div><h1>SniSSLConnectionSocketFactory.java</h1><pre class="source lang-java linenums">package crawler;
+
+import java.io.IOException;
+import java.net.Socket;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.protocol.HttpContext;
+
+/**
+ * Class to work around the exception thrown by the SSL subsystem when the server is incorrectly
+ * configured for SNI. In this case, it may return a warning: &quot;handshake alert: unrecognized_name&quot;.
+ * Browsers usually ignore this warning, while Java SSL throws an exception.
+ *
+ * This class extends the SSLConnectionSocketFactory to remove the hostname used in the request,
+ * which
+ * basically disabled SNI for this host.
+ *
+ * Based on the code provided by Ivan Shcheklein, available at:
+ *
+ * http://stackoverflow.com/questions/7615645/ssl-handshake-alert-unrecognized-name-error-since
+ * -upgrade-to-java-1-7-0/28571582#28571582
+ */
+public class SniSSLConnectionSocketFactory extends SSLConnectionSocketFactory {
+    public static final String ENABLE_SNI = &quot;__enable_sni__&quot;;
+
+    /*
+     * Implement any constructor you need for your particular application -
+     * SSLConnectionSocketFactory has many variants
+     */
+    public SniSSLConnectionSocketFactory(final SSLContext sslContext,
+                                         final HostnameVerifier verifier) {
+<span class="nc" id="L35">        super(sslContext, verifier);</span>
+<span class="nc" id="L36">    }</span>
+
+    @Override
+    public Socket createLayeredSocket(final Socket socket, final String target, final int port,
+                                      final HttpContext context) throws IOException {
+<span class="nc" id="L41">        Boolean enableSniValue = (Boolean) context.getAttribute(ENABLE_SNI);</span>
+<span class="nc bnc" id="L42" title="All 4 branches missed.">        boolean enableSni = enableSniValue == null || enableSniValue;</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        return super.createLayeredSocket(socket, enableSni ? target : &quot;&quot;, port, context);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
