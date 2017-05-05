@@ -22,6 +22,7 @@ import com.sleepycat.je.EnvironmentConfig;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import my.NewJrame.NewJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,6 +37,7 @@ public class CrawlController extends Configurable {
 
     static final Logger logger = LoggerFactory.getLogger(CrawlController.class);
 
+    public NewJFrame jf = new NewJFrame();
     /**
      * The 'customData' object can be used for passing custom crawl-related
      * configurations to different components of the crawler.
@@ -68,7 +70,7 @@ public class CrawlController extends Configurable {
     protected final Environment env;
 
     public CrawlController(CrawlConfig config, PageFetcher pageFetcher,
-                           RobotstxtServer robotstxtServer) throws Exception {
+                           RobotstxtServer robotstxtServer, NewJFrame jf) throws Exception {
         super(config);
 
         config.validate();
@@ -114,7 +116,7 @@ public class CrawlController extends Configurable {
 
         this.pageFetcher = pageFetcher;
         this.robotstxtServer = robotstxtServer;
-
+        this.jf = jf;
         finished = false;
         shuttingDown = false;
     }
@@ -513,6 +515,10 @@ public class CrawlController extends Configurable {
         return shuttingDown;
     }
 
+    public NewJFrame getJF() {
+        return jf;
+    }
+        
     /**
      * Set the current crawling session set to 'shutdown'. Crawler threads
      * monitor the shutdown flag and when it is set to true, they will no longer

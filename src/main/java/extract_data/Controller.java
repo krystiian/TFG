@@ -6,9 +6,14 @@ import crawler.PageFetcher;
 import crawler.RobotstxtConfig;
 import crawler.RobotstxtServer;
 import static crawler.UserAgentDirectives.logger;
+import my.NewJrame.NewJFrame;
 
 public class Controller {
+            
     public static void main(String[] args) throws Exception {
+        System.out.println("hello");
+        NewJFrame jf = new NewJFrame();
+        jf.setVisible(true);
         long startedAt = System.currentTimeMillis();
         if (args.length != 2) {
             logger.info("Needed parameters: ");
@@ -24,21 +29,22 @@ public class Controller {
         config.setMaxPagesToFetch(200);
         config.setResumableCrawling(false);
         config.setCrawlStorageFolder(crawlStorageFolder);
-        config.setPolitenessDelay(25);      
-
+        config.setPolitenessDelay(25);   
+        
         /*
          * Instantiate the controller for this crawl.
          */
         PageFetcher pageFetcher = new PageFetcher(config);
         RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
         RobotstxtServer robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher);
-        CrawlController controller = new CrawlController(config, pageFetcher, robotstxtServer);
+        CrawlController controller = new CrawlController(config, pageFetcher, robotstxtServer, jf);
         
         /*
          * For each crawl, you need to add some seed urls. These are the first
          * URLs that are fetched and then the crawler starts following links
          * which are found in these pages
          */
+         
         controller.addSeed("http://www.tecnonews.info/");
         /*
          * Start the crawl. This is a blocking operation, meaning that your code

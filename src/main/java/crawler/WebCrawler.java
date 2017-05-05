@@ -32,7 +32,6 @@ import org.slf4j.LoggerFactory;
  * @author Yasser Ganjisaffar
  */
 public class WebCrawler implements Runnable {
-
     protected static final Logger logger = LoggerFactory.getLogger(WebCrawler.class);
 
     /**
