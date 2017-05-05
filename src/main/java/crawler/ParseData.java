@@ -19,8 +19,6 @@ package crawler;
 
 import java.util.Set;
 
-import crawler.WebURL;
-
 public interface ParseData {
 
     Set<WebURL> getOutgoingUrls();

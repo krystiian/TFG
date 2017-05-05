@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-
 import org.apache.http.Header;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.message.BasicHeader;

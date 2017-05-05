@@ -21,8 +21,6 @@ import com.sleepycat.bind.tuple.TupleBinding;
 import com.sleepycat.bind.tuple.TupleInput;
 import com.sleepycat.bind.tuple.TupleOutput;
 
-import crawler.WebURL;
-
 /**
  * @author Yasser Ganjisaffar
  */

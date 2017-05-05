@@ -20,8 +20,6 @@ package crawler;
 import java.util.HashSet;
 import java.util.Set;
 
-import crawler.WebURL;
-
 public class TextParseData implements ParseData {
 
     private String textContent;

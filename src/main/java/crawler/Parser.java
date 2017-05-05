@@ -22,25 +22,14 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.HashSet;
 import java.util.Set;
-
 import org.apache.tika.language.LanguageIdentifier;
 import org.apache.tika.metadata.DublinCore;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.html.HtmlMapper;
 import org.apache.tika.parser.html.HtmlParser;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import crawler.Configurable;
-import crawler.CrawlConfig;
-import crawler.Page;
-import crawler.ParseException;
-import crawler.URLCanonicalizer;
-import crawler.WebURL;
-import crawler.Net;
-import crawler.Util;
 
 /**
  * @author Yasser Ganjisaffar

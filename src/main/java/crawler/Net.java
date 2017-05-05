@@ -5,8 +5,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import crawler.WebURL;
-
 /**
  * Created by Avi Hayun on 9/22/2014.
  * Net related Utils

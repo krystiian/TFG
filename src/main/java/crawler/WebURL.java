@@ -17,12 +17,10 @@
 
 package crawler;
 
-import java.io.Serializable;
-
-import java.util.Map;
-
 import com.sleepycat.persist.model.Entity;
 import com.sleepycat.persist.model.PrimaryKey;
+import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author Yasser Ganjisaffar

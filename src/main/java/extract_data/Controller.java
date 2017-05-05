@@ -1,6 +1,5 @@
 package extract_data;
 
-import extract_data.MyCrawler;
 import crawler.CrawlConfig;
 import crawler.CrawlController;
 import crawler.PageFetcher;

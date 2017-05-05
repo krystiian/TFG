@@ -22,18 +22,10 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.http.HttpStatus;
 import org.apache.http.NoHttpResponseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import crawler.Page;
-import crawler.PageBiggerThanMaxSizeException;
-import crawler.PageFetchResult;
-import crawler.PageFetcher;
-import crawler.WebURL;
-import crawler.Util;
 
 /**
  * @author Yasser Ganjisaffar

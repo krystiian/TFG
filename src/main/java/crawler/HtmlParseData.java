@@ -20,8 +20,6 @@ package crawler;
 import java.util.Map;
 import java.util.Set;
 
-import crawler.WebURL;
-
 public class HtmlParseData implements ParseData {
 
     private String html;

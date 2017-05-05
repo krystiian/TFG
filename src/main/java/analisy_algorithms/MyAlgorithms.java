@@ -14,17 +14,14 @@
  * limitations under the License.
  */
 package analisy_algorithms;
- 
-import com.google.common.base.Optional;
+
 import crawler.HtmlParseData;
 import crawler.Page;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import static javax.ws.rs.client.Entity.html;
 import org.apache.tika.language.LanguageIdentifier;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

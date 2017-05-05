@@ -17,17 +17,12 @@
 
 package crawler;
 
+import com.sleepycat.je.DatabaseException;
+import com.sleepycat.je.Environment;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sleepycat.je.DatabaseException;
-import com.sleepycat.je.Environment;
-
-import crawler.Configurable;
-import crawler.CrawlConfig;
-import crawler.WebURL;
 
 /**
  * @author Yasser Ganjisaffar

@@ -25,9 +25,7 @@ import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.net.ssl.SSLContext;
-
 import org.apache.http.Header;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpStatus;
@@ -59,16 +57,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.ssl.SSLContexts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import crawler.Configurable;
-import crawler.CrawlConfig;
-import crawler.AuthInfo;
-import crawler.BasicAuthInfo;
-import crawler.FormAuthInfo;
-import crawler.NtAuthInfo;
-import crawler.PageBiggerThanMaxSizeException;
-import crawler.URLCanonicalizer;
-import crawler.WebURL;
 
 /**
  * @author Yasser Ganjisaffar

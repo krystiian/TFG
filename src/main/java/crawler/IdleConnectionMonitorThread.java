@@ -18,7 +18,6 @@
 package crawler;
 
 import java.util.concurrent.TimeUnit;
-
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 
 public class IdleConnectionMonitorThread extends Thread {

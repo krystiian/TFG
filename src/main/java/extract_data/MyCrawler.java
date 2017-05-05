@@ -1,21 +1,12 @@
 package extract_data;
 
 import analisy_algorithms.MyAlgorithms;
-import crawler.AllTagMapper;
+import crawler.HtmlParseData;
 import crawler.Page;
 import crawler.WebCrawler;
-import crawler.HtmlParseData;
 import crawler.WebURL;
-import java.io.IOException;
-import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.tika.language.LanguageIdentifier;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 
 
@@ -57,7 +48,10 @@ public class MyCrawler extends WebCrawler {
              String title = htmlParseData.getTitle();
              Set<WebURL> links = htmlParseData.getOutgoingUrls();
              
+             
              System.out.println(url);
+             System.out.println(htmlParseData.getOutgoingUrls().size());
+             System.out.println("STATUS CODE: " + page.getStatusCode());
              System.out.println("LANG: " + algorithms.detectLanguage(page));
              System.out.print("EMAILS: ");
              algorithms.printAllEmails(algorithms.detectEmails(page));
