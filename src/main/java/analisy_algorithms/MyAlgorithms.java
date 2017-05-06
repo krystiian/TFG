@@ -17,6 +17,9 @@ package analisy_algorithms;
 
 import crawler.HtmlParseData;
 import crawler.Page;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -65,7 +68,7 @@ public class MyAlgorithms {
         else if(document.getElementsByAttribute("lang").attr("lang").length() > 0 ) 
         {
             System.out.print("lang ");
-            codeToLang(document.getElementsByAttribute("lang").attr("lang").toLowerCase().substring(0, 2));
+            return codeToLang(document.getElementsByAttribute("lang").attr("lang").toLowerCase().substring(0, 2));
         }
         else if(document.getElementsByTag("p").size() > 0)
         {
@@ -95,4 +98,21 @@ public class MyAlgorithms {
         Locale loc = new Locale(code);
         return loc.getDisplayLanguage();
     }
+    
+    public boolean isValidURL(String url)
+    {  
+        URL u = null;
+        try {  
+            u = new URL(url);  
+        } catch (MalformedURLException e) {  
+            return false;  
+        }
+
+        try {  
+            u.toURI();  
+        } catch (URISyntaxException e) {  
+            return false;  
+        }  
+        return true;  
+    } 
   }

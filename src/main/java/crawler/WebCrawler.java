@@ -372,8 +372,8 @@ public class WebCrawler implements Runnable {
 
                     String movedToUrl = fetchResult.getMovedToUrl();
                     if (movedToUrl == null) {
-                        /*logger.warn("Unexpected error, URL: {} is redirected to NOTHING",
-                                    curURL);*/
+                        logger.warn("Unexpected error, URL: {} is redirected to NOTHING",
+                                    curURL);
                         return;
                     }
                     page.setRedirectedToUrl(movedToUrl);
@@ -382,7 +382,7 @@ public class WebCrawler implements Runnable {
                     if (myController.getConfig().isFollowRedirects()) {
                         int newDocId = docIdServer.getDocId(movedToUrl);
                         if (newDocId > 0) {
-                            //logger.debug("Redirect page: {} is already seen", curURL);
+                            logger.debug("Redirect page: {} is already seen", curURL);
                             return;
                         }
 
@@ -465,23 +465,23 @@ public class WebCrawler implements Runnable {
                                         webURL.setDocid(docIdServer.getNewDocID(webURL.getURL()));
                                         toSchedule.add(webURL);
                                     } else {
-                                        /*logger.debug(
+                                        logger.debug(
                                             "Not visiting: {} as per the server's \"robots.txt\" " +
-                                            "policy", webURL.getURL());*/
+                                            "policy", webURL.getURL());
                                     }
                                 } else {
-                                    /*logger.debug(
+                                    logger.debug(
                                         "Not visiting: {} as per your \"shouldVisit\" policy",
-                                        webURL.getURL());*/
+                                        webURL.getURL());
                                 }
                             }
                         }
                     }
                     frontier.scheduleAll(toSchedule);
                 } else {
-                    /*logger.debug("Not looking for links in page {}, "
+                    logger.debug("Not looking for links in page {}, "
                                  + "as per your \"shouldFollowLinksInPage\" policy",
-                                 page.getWebURL().getURL());*/
+                                 page.getWebURL().getURL());
                 }
 
                 boolean noIndex = myController.getConfig().isRespectNoIndex() &&
@@ -502,9 +502,9 @@ public class WebCrawler implements Runnable {
         } catch (ContentFetchException cfe) {
             onContentFetchError(curURL);
         } catch (NotAllowedContentException nace) {
-            /*logger.debug(
+            logger.debug(
                 "Skipping: {} as it contains binary content which you configured not to crawl",
-                curURL.getURL());*/
+                curURL.getURL());
         } catch (Exception e) {
             onUnhandledException(curURL, e);
         } finally {

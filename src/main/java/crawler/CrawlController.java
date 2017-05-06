@@ -22,7 +22,7 @@ import com.sleepycat.je.EnvironmentConfig;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import my.NewJrame.NewJFrame;
+import main.mainMenu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +37,7 @@ public class CrawlController extends Configurable {
 
     static final Logger logger = LoggerFactory.getLogger(CrawlController.class);
 
-    public NewJFrame jf = new NewJFrame();
+    public mainMenu menu = new mainMenu();
     /**
      * The 'customData' object can be used for passing custom crawl-related
      * configurations to different components of the crawler.
@@ -70,7 +70,7 @@ public class CrawlController extends Configurable {
     protected final Environment env;
 
     public CrawlController(CrawlConfig config, PageFetcher pageFetcher,
-                           RobotstxtServer robotstxtServer, NewJFrame jf) throws Exception {
+                           RobotstxtServer robotstxtServer, mainMenu menu) throws Exception {
         super(config);
 
         config.validate();
@@ -116,7 +116,7 @@ public class CrawlController extends Configurable {
 
         this.pageFetcher = pageFetcher;
         this.robotstxtServer = robotstxtServer;
-        this.jf = jf;
+        this.menu = menu;
         finished = false;
         shuttingDown = false;
     }
@@ -515,8 +515,8 @@ public class CrawlController extends Configurable {
         return shuttingDown;
     }
 
-    public NewJFrame getJF() {
-        return jf;
+    public mainMenu getJF() {
+        return this.menu;
     }
         
     /**

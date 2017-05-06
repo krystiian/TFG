@@ -1,19 +1,18 @@
 package extract_data;
 
+import main.mainMenu;
 import crawler.CrawlConfig;
 import crawler.CrawlController;
 import crawler.PageFetcher;
 import crawler.RobotstxtConfig;
 import crawler.RobotstxtServer;
 import static crawler.UserAgentDirectives.logger;
-import my.NewJrame.NewJFrame;
 
 public class Controller {
             
     public static void main(String[] args) throws Exception {
-        System.out.println("hello");
-        NewJFrame jf = new NewJFrame();
-        jf.setVisible(true);
+        mainMenu menu = new mainMenu();
+        menu.setVisible(true);
         long startedAt = System.currentTimeMillis();
         if (args.length != 2) {
             logger.info("Needed parameters: ");
@@ -22,7 +21,7 @@ public class Controller {
             return;
         }
         String crawlStorageFolder = args[0];
-        int numberOfCrawlers = 1;   
+        int numberOfCrawlers = 5;   
         
         CrawlConfig config = new CrawlConfig();
         config.setMaxDepthOfCrawling(2);
@@ -37,7 +36,7 @@ public class Controller {
         PageFetcher pageFetcher = new PageFetcher(config);
         RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
         RobotstxtServer robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher);
-        CrawlController controller = new CrawlController(config, pageFetcher, robotstxtServer, jf);
+        CrawlController controller = new CrawlController(config, pageFetcher, robotstxtServer, menu);
         
         /*
          * For each crawl, you need to add some seed urls. These are the first
@@ -45,7 +44,7 @@ public class Controller {
          * which are found in these pages
          */
          
-        controller.addSeed("http://www.tecnonews.info/");
+        controller.addSeed("https://www.upf.edu");
         /*
          * Start the crawl. This is a blocking operation, meaning that your code
          * will reach the line after this only when crawling is finished.

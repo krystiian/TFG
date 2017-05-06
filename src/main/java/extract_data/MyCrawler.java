@@ -30,7 +30,7 @@ public class MyCrawler extends WebCrawler {
      public boolean shouldVisit(Page referringPage, WebURL url) {
          String href = url.getURL().toLowerCase();
          return !FILTERS.matcher(href).matches()
-                && (href.startsWith("http://www.tecnonews.info/") || href.startsWith("http://www.tecnonews.info/"));
+                && (href.startsWith("http://www.upf.edu/") || href.startsWith("https://www.upf.edu"));
      }
 
      /**
@@ -42,7 +42,7 @@ public class MyCrawler extends WebCrawler {
          String url = page.getWebURL().getURL();
          if (page.getParseData() instanceof HtmlParseData) {
              HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
-             this.getMyController().getJF().getJ3().setText(Integer.toString(htmlParseData.getOutgoingUrls().size()));
+             //this.getMyController().getJF().getJ3().setText(Integer.toString(htmlParseData.getOutgoingUrls().size()));
              String text = htmlParseData.getText();
              String html = htmlParseData.getHtml();  
              String title = htmlParseData.getTitle();
@@ -50,6 +50,7 @@ public class MyCrawler extends WebCrawler {
              
              
              System.out.println(url);
+             System.out.println(page.getWebURL().getPath());
              System.out.println(htmlParseData.getOutgoingUrls().size());
              System.out.println("STATUS CODE: " + page.getStatusCode());
              System.out.println("LANG: " + algorithms.detectLanguage(page));

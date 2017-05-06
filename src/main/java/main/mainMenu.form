@@ -64,15 +64,14 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLayeredPane2" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="jLayeredPane2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="jLayeredPane2" min="-2" pref="232" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -85,18 +84,19 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="jToggleButton1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="jLayeredPane3" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jLayeredPane3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLayeredPane1" max="32767" attributes="0"/>
-                              <Component id="jLayeredPane4" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="jLayeredPane4" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="jButton1" max="32767" attributes="0"/>
+                                      <Component id="jToggleButton1" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace pref="20" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
@@ -107,20 +107,20 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="jLayeredPane3" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jToggleButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLayeredPane1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLayeredPane4" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jToggleButton1" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="jLayeredPane1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jLayeredPane4" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jLayeredPane3" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -140,7 +140,7 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
@@ -151,6 +151,7 @@
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jRadioButton6" min="-2" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
@@ -181,7 +182,7 @@
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="0" pref="12" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -206,7 +207,9 @@
                                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jTextField5" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jRadioButton6" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -216,7 +219,11 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Semilla"/>
                         <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Indica la p&#xe1;gina inicial en la que empezar&#xe1; el Crawling.&lt;br&gt;&lt;br&gt;&#xa;&#xa;Ejemplo:  http://www.upf.edu &lt;br&gt;&lt;br&gt;&#xa;&#xa;Separar por espacios las direcciones para obtener multiples p&#xe1;ginas como Semilla &lt;br&gt;&lt;br&gt;&#xa;&#xa;Ejemplo: http://www.upf.edu http://www.tecnonews.info&#xa;&lt;/html&gt;" noResource="true"/>
+                        <Property name="name" type="java.lang.String" value="Semilla" noResource="true"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel1MouseEntered"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JTextField" name="jTextField1">
                       <Properties>
@@ -232,18 +239,19 @@
                     <Component class="javax.swing.JLabel" name="jLabel2">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Profundidad"/>
-                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Indica el n&#xfa;mero m&#xe1;ximos de saltos que se har&#xe1;n desde la p&#xe1;gina seed.&lt;br&gt;&lt;br&gt;&#xa;&#xa;Es decir, si iniciamos el Crawling en la p&#xe1;gina &quot;A&quot; el m&#xe1;ximo recorrido ser&#xe1; el siguiente&lt;br&gt;&lt;br&gt;&#xa;&#xa;&quot;A&quot; -&gt; &quot;B&quot; -&gt; &quot;C&quot; -&gt; &quot;D&quot; -&gt; &quot;E&quot;&lt;br&gt;&lt;br&gt;&#xa;&#xa;Siendo A la p&#xe1;gina Inicial&lt;br&gt;&#xa;Siendo B un enlace de la p&#xe1;gina A&lt;br&gt;&#xa;Siendo C un enlace de la p&#xe1;gina B&lt;br&gt;&#xa;Siendo D n enlace de la p&#xe1;gina C&lt;br&gt;&#xa;Siendo E un enlace de la p&#xe1;gina D&lt;br&gt;&#xa;&lt;/html&gt;" noResource="true"/>
+                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Indica el n&#xfa;mero m&#xe1;ximos de saltos que se har&#xe1;n desde la p&#xe1;gina seed.&lt;br&gt;&lt;br&gt;&#xa;&#xa;Si la profundidad es -1, se analizar&#xe1;n profundidades ilimitadas.&lt;br&gt;&#xa;Si la profundida es 0, solo se analizar&#xe1; la p&#xe1;gina Semilla.&lt;br&gt;&#xa;Si la profundidad es &gt;0 el m&#xe1;ximo recorrido para cada uno de los enalces de la p&#xe1;gina A ser&#xe1; el siguiente&lt;br&gt;&lt;br&gt;&#xa;&#xa;Ejemplo: Profundidad =  4&lt;br&gt;&#xa;&quot;A&quot; -&gt; &quot;B&quot; -&gt; &quot;C&quot; -&gt; &quot;D&quot; -&gt; &quot;E&quot;&lt;br&gt;&lt;br&gt;&#xa;&#xa;Siendo A la p&#xe1;gina Inicial&lt;br&gt;&#xa;Siendo B un enlace de la p&#xe1;gina A&lt;br&gt;&#xa;Siendo C un enlace de la p&#xe1;gina B&lt;br&gt;&#xa;Siendo D n enlace de la p&#xe1;gina C&lt;br&gt;&#xa;Siendo E un enlace de la p&#xe1;gina D&lt;br&gt;&lt;br&gt;&#xa;&#xa;Si la profundidad introducida no es un valor correcto se utilizar&#xe1; &quot;-1&quot;.&#xa;&lt;/html&gt;" noResource="true"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel3">
                       <Properties>
+                        <Property name="horizontalAlignment" type="int" value="2"/>
                         <Property name="text" type="java.lang.String" value="Crawlers"/>
-                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;N&#xfa;mero de procesos concurrentes que recopilar&#xe1;n informaci&#xf3;n. &lt;br&gt;&lt;br&gt;&#xa;&#xa;ejemplo: 5 &lt;br&gt;&lt;br&gt;&#xa;&#xa;En caso de poner un valor incorrecto, se usar&#xe1;n 3 crawlers.&#xa;&lt;/html&gt;" noResource="true"/>
+                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;N&#xfa;mero de procesos concurrentes del crawler que recopilar&#xe1;n informaci&#xf3;n. &lt;br&gt;&lt;br&gt;&#xa;&#xa;ejemplo: Crawlers = 5 &lt;br&gt;&lt;br&gt;&#xa;Se crear&#xe1;n 5 procesos que ir&#xe1;n recopilando informaci&#xf3;n. &lt;br&gt;&lt;br&gt;&#xa;&#xa;El valor m&#xed;nimo es 1. &lt;br&gt;&#xa;En caso de poner un valor incorrecto, se usar&#xe1;n 5 crawlers.&#xa;&lt;/html&gt;" noResource="true"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="jTextField3">
                       <Properties>
-                        <Property name="horizontalAlignment" type="int" value="0"/>
+                        <Property name="horizontalAlignment" type="int" value="2"/>
                         <Property name="text" type="java.lang.String" value="5"/>
                       </Properties>
                       <Events>
@@ -253,17 +261,22 @@
                     <Component class="javax.swing.JLabel" name="jLabel4">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Links M&#xe1;ximos"/>
+                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Enlaces m&#xe1;ximos que se analizar&#xe1;n &lt;br&gt;&lt;br&gt;&#xa;&#xa;Ejemplo: Links m&#xe1;ximos = 200&lt;br&gt;&#xa;Se analizar&#xe1;n 200 enlaces y el programa finalizar&#xe1;. &lt;br&gt;&#xa;&#xa;Si el valor introducido no es v&#xe1;lido, se analizar&#xe1;n 5000 enlaces.&lt;br&gt;&lt;br&gt;&#xa;&#xa;Introducir &quot;-1&quot; para analizar sin l&#xed;mite &lt;br&gt;&#xa;No es recomendable ya que pueden existir millones de enalces por analizar.&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="jTextField4">
                       <Properties>
                         <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="200"/>
+                        <Property name="text" type="java.lang.String" value="5000"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField4ActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel5">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Tiempo (ms)"/>
+                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Tiempo entre llamadas a un servidor con el mismo host,  manera de respetar a terceros.&lt;br&gt;&lt;br&gt;&#xa;&#xa;Tiempo indicado en milisegundos.&lt;br&gt;&lt;br&gt;&#xa;&#xa;Valor m&#xed;nimo de ms es de 50ms.&lt;br&gt;&lt;br&gt;&#xa;Si el valor introducido es erroneo, se utilizar&#xe1;n 50ms.&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="jTextField5">
@@ -278,10 +291,19 @@
                     <Component class="javax.swing.JTextField" name="jTextField9">
                       <Properties>
                         <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="5"/>
+                        <Property name="text" type="java.lang.String" value="-1"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField9ActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JRadioButton" name="jRadioButton6">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Resumable"/>
+                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;Continuar analizando los enlaces de la &#xfa;ltima sesi&#xf3;n. &lt;br&gt;&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButton6ActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -295,6 +317,7 @@
                         </TitledBorder>
                       </Border>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;Selecciona multiples opciones para realizar una b&#xfa;squeda m&#xe1;s compleja. &lt;br&gt;&#xa;&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
                   </Properties>
 
                   <Layout>
@@ -303,13 +326,6 @@
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jTextField6" max="32767" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
-                                  </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -318,11 +334,23 @@
                                       <Component id="jRadioButton3" min="-2" pref="21" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel7" min="-2" pref="48" max="-2" attributes="0"/>
+                                      </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jTextField7" max="32767" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="jTextField7" max="32767" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="jTextField6" max="32767" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -367,7 +395,7 @@
                                   </Group>
                                   <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel9" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
                                   <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -382,17 +410,12 @@
                     <Component class="javax.swing.JLabel" name="jLabel6">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Contiene"/>
+                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;Solo se analizar&#xe1;n enlaces que contengan alguna de las palabras introducidas.&lt;br&gt;&#xa;&#xa;ejemplo: upf &lt;br&gt;&lt;br&gt;&#xa;&#xa;Si el enlace es: http://www.tecnonews.info     ,este no ser&#xe1; analizado &lt;br&gt;&#xa;Si el enlace es: http://www.upf.edu      ,este s&#xed; ser&#xe1; analizado&lt;br&gt;&lt;br&gt;&#xa;&#xa;Separar palabras por espacios para a&#xf1;adir mutiples palabras. &lt;br&gt;&lt;br&gt;&#xa;&#xa;ejemplo: upf secretaria &lt;br&gt;&lt;br&gt;&#xa;&#xa;Si el enlace es: http://www.upf.edu    , este no ser&#xe1; analizado &lt;br&gt;&#xa;Si el enalce es: http://www.upf.edu/test/secretaria/test    ,este si ser&#xe1; analizado &lt;br&gt;&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="jTextField6">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="upf"/>
-                      </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="jRadioButton3">
-                      <Properties>
-                        <Property name="selected" type="boolean" value="true"/>
-                      </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButton3ActionPerformed"/>
                       </Events>
@@ -400,6 +423,7 @@
                     <Component class="javax.swing.JLabel" name="jLabel7">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="RegEx"/>
+                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;Solo analizar&#xe1; enlaces que cumplan con la expresi&#xf3;n regular introducita &lt;br&gt;&lt;br&gt;&#xa;&#xa;Ejemplo: .*(\u005c\u005c.(css))$ &lt;br&gt;&lt;br&gt;&#xa;&#xa;Analizar&#xe1; todos los enlaces que no terminen en .css&#xa;&#xa;&lt;/html&gt;" noResource="true" containsInvalidXMLChars="true"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="jTextField7">
@@ -409,16 +433,14 @@
                     <Component class="javax.swing.JRadioButton" name="jRadioButton2">
                     </Component>
                     <Component class="javax.swing.JTextField" name="jTextField8">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="upf.edu"/>
-                      </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField8ActionPerformed"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel8">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Empieza"/>
+                        <Property name="text" type="java.lang.String" value="URL"/>
+                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;Solo se analizar&#xe1;n enlaces que tenga la URL especificada. &lt;br&gt;&lt;br&gt;&#xa;&#xa;ejemplo: http://www.upf.edu&lt;br&gt;&lt;br&gt;&#xa;&#xa;Buscar&#xe1; enlaces que empiecen por: &lt;html&gt; &lt;br&gt;&lt;br&gt;&#xa;&#xa;http://www.upf.edu &lt;br&gt;&#xa;https://www.upf.edu &lt;br&gt;&#xa;www.upf.edu &lt;br&gt;&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel11">
@@ -426,13 +448,13 @@
                     <Component class="javax.swing.JLabel" name="jLabel9">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Max Slash"/>
-                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Indica la cantidad m&#xe1;xima de &quot;/&quot; posteriores a la direcci&#xf3;n web permitidas.&lt;br&gt;&lt;br&gt;&#xa;&#xa;Ejemplo: 3 &lt;br&gt;&lt;br&gt;&#xa;&#xa;&lt;p&gt;http://www.upf.edu&lt;b&gt;/&lt;/b&gt;est&lt;b&gt;/&lt;/b&gt;try&lt;b&gt;/&lt;/b&gt;test&lt;/p&gt;&#xa;&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
+                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Analizar&#xe1; enlaces donde la cantidad de &quot;/&quot; del PATH del link no sea superior a este valor.&lt;br&gt;&lt;br&gt;&#xa;&#xa;Ejemplo: Max Slash = 3 &lt;br&gt;&lt;br&gt;&#xa;&#xa;Si el enlace es http://www.upf.edu/parte1/parte2/parte3 &lt;br&gt;&lt;br&gt;&#xa;&#xa;El PATH es /parte1/parte2/      , por lo tanto s&#xed; que se analizar&#xe1;.&lt;br&gt;&lt;br&gt;&#xa;&#xa;Si el enlace es http://www.upf.edu/parte1/parte2/parte3/parte4 &lt;br&gt;&lt;br&gt;&#xa;&#xa;El Path es /parte1/parte2/parte3/   , por lo tanto no se analizar&#xe1;. &lt;br&gt;&lt;br&gt;&#xa;&#xa;El valor -1 indicar&#xe1; que se analizar&#xe1;n ilimitados /&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="jTextField2">
                       <Properties>
                         <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="5"/>
+                        <Property name="text" type="java.lang.String" value="-1"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -446,19 +468,17 @@
                         </TitledBorder>
                       </Border>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;Analizar en tiempo de ejecuci&#xf3;n &lt;br&gt;&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
                   </Properties>
 
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="jRadioButton4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jRadioButton5" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jRadioButton6" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="152" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -469,7 +489,6 @@
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jRadioButton4" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jRadioButton5" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jRadioButton6" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -479,16 +498,13 @@
                     <Component class="javax.swing.JRadioButton" name="jRadioButton4">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Idioma"/>
+                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Analiza el idioma de la p&#xe1;gina extraida &lt;br&gt;&#xa;&#xa;Buscar&#xe1; el tag &quot;lang&quot; o &quot;xml:lang&quot; de la p&#xe1;gina &lt;br&gt;&lt;br&gt;&#xa;Si la p&#xe1;gina no dispone de estos tags, se buscar&#xe1; un parrafo y se intentar&#xe1; identificar el Idioma a partir de ese texto. &lt;br&gt;&lt;br&gt;&#xa;&#xa;Si la p&#xe1;gina no dispone de ningun tag &quot;p&quot;, se coger&#xe1; el t&#xed;tulo y har&#xe1; esa misma acci&#xf3;n &lt;br&gt;&#xa;&#xa;&lt;/html&gt;&#xa;" noResource="true"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="jRadioButton5">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Emails"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JRadioButton" name="jRadioButton6">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Code"/>
+                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;Recopilar&#xe1; todos los emails del enlace.&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
                       </Properties>
                     </Component>
                   </SubComponents>
