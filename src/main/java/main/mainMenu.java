@@ -39,20 +39,21 @@ public class mainMenu extends javax.swing.JFrame {
 
     public mainMenu menu = this;
     
-    private String semilla;
-    private String resumable;
-    private String[] url;
-    private String[] contiene;
-    private String regex;
-    private int crawlers = 5;
-    private int profundidad = -1;
-    private int links = 5000;
-    private int tiempo = 50;
-    private int slash = -1;
-    private boolean isResumable = false;
-    private boolean isURL = false;
-    private boolean isContiene = false;
-    private boolean isRegex = false;
+    public String[] semilla;
+    public String[] url;
+    public String[] contiene;
+    public String regex;
+    public int crawlers = 5;
+    public int profundidad = -1;
+    public int links = 5000;
+    public int tiempo = 50;
+    public int slash = -1;
+    public boolean isResumable = false;
+    public boolean isURL = false;
+    public boolean isContiene = false;
+    public boolean isRegex = false;
+    public boolean isIdioma = false;
+    public boolean isEmails = false;
 
     /**
      * Creates new form mainMenu
@@ -495,13 +496,8 @@ public class mainMenu extends javax.swing.JFrame {
             jToggleButton1.setText("Stop");
             CrawlConfig config = new CrawlConfig();
             
-            if(getIsURL()) {setURL(getURL());setIsURL(true);}
-            if(getIsContiene()) {setContiene(getContiene());setIsContiene(true);}
-            if(getIsRegEx()) {setRegex(getRegEx());setIsRegex(true);}
-            setIsResumable(getIsResumable());
-            
             //Fetch parameters from Main Menu
-            validateParams(this.getCrawlers(),this.getProfundidad(),this.getMaxLinks(),this.getTiempo(),this.getMaxSlash()); 
+            this.getAllParamsFromMenu();
             
             //Set parameters to the Crawler Config
             int numberOfCrawlers = this.crawlers;
@@ -522,7 +518,7 @@ public class mainMenu extends javax.swing.JFrame {
                 Logger.getLogger(mainMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            addSeeds(this.getSemilla(), controller);
+            addSeeds(this.semilla, controller);
             controller.startNonBlocking(MyCrawler.class, numberOfCrawlers);
             
         } else {
@@ -567,7 +563,7 @@ public class mainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButton6ActionPerformed
 
     //SET PARAMS
-    public void setSemilla(String n) {this.semilla = n;}
+    public void setSemilla(String n) {this.semilla = n.split("\\s+");}
     public void setCrawlers(int n) {this.crawlers = n;}
     public void setProfundidad(int n) {this.profundidad = n;}
     public void setMaxLinks(int n) {this.links = n;}
@@ -580,6 +576,8 @@ public class mainMenu extends javax.swing.JFrame {
     public void setContiene(String n){this.contiene = n.split("\\s+");}
     public void setURL(String n){this.url = n.split("\\s+");}
     public void setRegex(String n){this.regex = n;}
+    public void setIsIdioma(boolean n){this.isIdioma = n;}
+    public void setIsEmails(boolean n){this.isEmails = n;}
     
     //GET CRAWLING PARAMETERS FROM MENU
     public String getSemilla() {return this.jTextField1.getText();}
@@ -596,7 +594,8 @@ public class mainMenu extends javax.swing.JFrame {
     public Boolean getIsURL() {return this.jRadioButton3.isSelected();}
     public Boolean getIsContiene() {return this.jRadioButton1.isSelected();}
     public Boolean getIsRegEx() {return this.jRadioButton2.isSelected();}
-      
+    public Boolean getIsIdioma(){return this.jRadioButton4.isSelected();}
+    public Boolean getIsEmails(){return this.jRadioButton5.isSelected();}      
     //COMPROBAR VALIDEZ DE PARAMETROS
     public void validateParams(String _crawlers, String _profundidad, String _maxLinks, String _tiempo, String _slash) {
         try {
@@ -627,24 +626,34 @@ public class mainMenu extends javax.swing.JFrame {
             //donothing
         }
         try {
-            if(Integer.parseInt(_slash) >= 0) this.slash = Integer.parseInt(_slash);
+            if(Integer.parseInt(_slash) > 0) this.slash = Integer.parseInt(_slash);
         }
         catch (NumberFormatException e) {
             //donothing
         }
 }
 
-    public void addSeeds(String s, CrawlController controller)
+    public void addSeeds(String[] s, CrawlController controller)
     {
         MyAlgorithms myAlg = new MyAlgorithms();
-        String[] _s = s.split("\\s+");
-        for(int i = 0 ; i < _s.length; ++i)
+        for(int i = 0 ; i < s.length; ++i)
         {
-            if(myAlg.isValidURL(_s[i])) controller.addSeed(_s[i]);
-            System.out.println("The URL " + _s[i] +" IS NOT VALID");
+            controller.addSeed(s[i]);
+            if(!myAlg.isValidURL(s[i])) System.out.println("La URL " + s[i] +" PODRÍA SER INCORRECTA.");
         }
     }
      
+    public void getAllParamsFromMenu()
+    {
+        setSemilla(getSemilla());
+        validateParams(this.getCrawlers(),this.getProfundidad(),this.getMaxLinks(),this.getTiempo(),this.getMaxSlash()); 
+        if(getIsURL()) {setURL(getURL());setIsURL(true);}
+        if(getIsContiene()) {setContiene(getContiene());setIsContiene(true);}
+        if(getIsRegEx()) {setRegex(getRegEx());setIsRegex(true);}
+        setIsResumable(getIsResumable());
+        setIsIdioma(getIsIdioma());
+        setIsEmails(getIsEmails());
+    }
     /**
      * @param args the command line arguments
      */

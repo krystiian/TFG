@@ -7,6 +7,7 @@ import crawler.WebCrawler;
 import crawler.WebURL;
 import java.util.Set;
 import java.util.regex.Pattern;
+import main.mainMenu;
 
 
 
@@ -14,8 +15,8 @@ public class MyCrawler extends WebCrawler {
     private final static Pattern FILTERS = Pattern.compile(
         ".*(\\.(css|js|mid|mp2|mp3|mp4|wav|avi|mov|mpeg|ram|m4v|pdf" +
         "|rm|smil|wmv|swf|wma|zip|rar|gz|bmp|gif|jpe?g|png|tiff?))$");
-    
     MyAlgorithms algorithms = new MyAlgorithms();
+
     /**
      * This method receives two parameters. The first parameter is the page
      * in which we have discovered this new url and the second parameter is
@@ -29,8 +30,9 @@ public class MyCrawler extends WebCrawler {
      @Override
      public boolean shouldVisit(Page referringPage, WebURL url) {
          String href = url.getURL().toLowerCase();
+         mainMenu menu = this.getMyController().menu;
          return !FILTERS.matcher(href).matches()
-                && (href.startsWith("http://www.upf.edu/") || href.startsWith("https://www.upf.edu"));
+                && isUnderCondition(menu, url);//(href.startsWith("http://www.upf.edu/") || href.startsWith("https://www.upf.edu"));
      }
 
      /**
@@ -50,16 +52,62 @@ public class MyCrawler extends WebCrawler {
              
              
              System.out.println(url);
-             System.out.println(page.getWebURL().getPath());
-             System.out.println(htmlParseData.getOutgoingUrls().size());
              System.out.println("STATUS CODE: " + page.getStatusCode());
              System.out.println("LANG: " + algorithms.detectLanguage(page));
              System.out.print("EMAILS: ");
              algorithms.printAllEmails(algorithms.detectEmails(page));
-
-             
-             /*System.out.println("Html length: " + html.length());
-             System.out.println("Number of outgoing links: " + links.size());*/
          }
     }
+     
+     public String removePrefix(String url)
+     {
+        if(url.startsWith("http://")) url = url.replace("http://","");
+        else if(url.startsWith("http:\\\\"))url = url.replace("http:\\\\","");
+        else if(url.startsWith("https://")) url = url.replace("https://","");
+        else if(url.startsWith("https:\\\\"))url = url.replace("https:\\\\","");
+        return url;
+     }
+     public Boolean isUnderCondition(mainMenu menu, WebURL href)
+     {
+         Boolean found = false;
+         String s = href.getURL().toLowerCase();
+         if(menu.isURL)
+         {
+          boolean foundURL = false;
+          String[] URL = menu.url;
+          for(int i=0; i < URL.length; ++i)
+          {
+              String url = URL[i];
+              url = removePrefix(url);
+              if(s.startsWith("http://" + url) || s.startsWith("https://" + url) || s.startsWith("http:\\\\" + url) || s.startsWith("https:\\\\" + url)) foundURL = true;    
+          }
+          if(!foundURL) return false;
+         }
+         if(menu.isContiene)
+         {
+             boolean foundContiene = false;
+             String[] contiene = menu.contiene;
+             for(int i=0; i < contiene.length; ++i)
+             {
+                 if(s.contains(contiene[i])) foundContiene = true;
+             }
+             if(!foundContiene) return false;
+         }
+         if(menu.isRegex)
+         {
+             Pattern regex = Pattern.compile(menu.regex);
+             if(!regex.matcher(s).matches()) return false;
+         }
+         if(menu.slash != -1)
+         {
+             String path = href.getPath();
+             int counter = 0;
+             for(int i = 0; i < path.length(); ++i)
+             {
+                 if(path.charAt(i) == '/') ++counter;
+             }
+             if(counter > menu.slash) return false;
+         }
+         return true;
+     }
 }

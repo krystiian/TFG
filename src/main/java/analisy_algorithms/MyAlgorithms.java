@@ -72,7 +72,7 @@ public class MyAlgorithms {
         }
         else if(document.getElementsByTag("p").size() > 0)
         {
-            System.out.println("p ");
+            System.out.print("p ");
             LanguageIdentifier languageIdentifier = new LanguageIdentifier(document.getElementsByTag("p").text().replaceAll("[^\\p{L}\\p{Nd}]+|[0-9]|\\s+", " "));
             return codeToLang(languageIdentifier.getLanguage());
         }
