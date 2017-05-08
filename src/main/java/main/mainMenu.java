@@ -16,6 +16,7 @@
 package main;
 
 import analisy_algorithms.MyAlgorithms;
+import analisy_algorithms.MyExcel;
 import crawler.CrawlConfig;
 import crawler.CrawlController;
 import crawler.PageFetcher;
@@ -25,11 +26,16 @@ import static crawler.UserAgentDirectives.logger;
 import crawler.WebURL;
 import extract_data.MyCrawler;
 import java.awt.Component;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
+import javax.swing.text.DefaultCaret;
 
 /**
  *
@@ -38,28 +44,48 @@ import javax.swing.ToolTipManager;
 public class mainMenu extends javax.swing.JFrame {
 
     public mainMenu menu = this;
+    public int enlacesTotales = 0;  //OBTENIDOS
+    public int enlacesValidos = 0; //ENLACES CUMPLEN CON LO PEDIDO
+    public int enlacesErroneos = 0; //ENLACES CON ERROR
+    public int enlacesAnalizados = 0; //ENLACES GUARDADOS EN LA BBDD
+    public int emailsFetched = 0; //EMAILS RECOPILADOS
     
+    
+    
+    CrawlController controller;
+    
+    public Map<String, Object[]> data = new TreeMap<String, Object[]>();
     public String[] semilla;
-    public String[] url;
     public String[] contiene;
+    public String[] noContiene;
+    public String[] contains;
     public String regex;
     public int crawlers = 5;
     public int profundidad = -1;
-    public int links = 5000;
     public int tiempo = 50;
-    public int slash = -1;
     public boolean isResumable = false;
-    public boolean isURL = false;
     public boolean isContiene = false;
+    public boolean isNoContiene = false;
     public boolean isRegex = false;
     public boolean isIdioma = false;
     public boolean isEmails = false;
-
+    public boolean isAtLeast = false;
+    public boolean isNone = false;
+    public boolean isAll = false;
+    public boolean isBroken = false;
+    
     /**
      * Creates new form mainMenu
      */
     public mainMenu() {
         initComponents();
+        menu.data.put("0", new Object[]{"URL","STATUS","LANGUAGE","EMAILS"});
+        menu.setTextStats(menu.enlacesTotales + " ENLACES   |   " + menu.enlacesValidos + " VALIDOS   |   " + menu.enlacesAnalizados + " ANALIZADOS  |  " + menu.enlacesErroneos + " ERROR  |  " + menu.emailsFetched + " EMAILS");
+        DefaultCaret caret = (DefaultCaret)this.jTextArea2.getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+        jTextArea2.setEditable(false);
+        //jProgressBar2.setMinimum(MY_MINIMUM);
+        //jProgressBar2.setMaximum(MY_MAXIMUM);
         ToolTipManager.sharedInstance().setDismissDelay(20000);
     }
 
@@ -77,6 +103,7 @@ public class mainMenu extends javax.swing.JFrame {
         buttonGroup3 = new javax.swing.ButtonGroup();
         buttonGroup4 = new javax.swing.ButtonGroup();
         buttonGroup5 = new javax.swing.ButtonGroup();
+        jPopupMenu1 = new javax.swing.JPopupMenu();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLayeredPane2 = new javax.swing.JLayeredPane();
@@ -86,36 +113,43 @@ public class mainMenu extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
         jTextField9 = new javax.swing.JTextField();
-        jRadioButton6 = new javax.swing.JRadioButton();
-        jLayeredPane1 = new javax.swing.JLayeredPane();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jLabel7 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jTextField8 = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
         jLayeredPane4 = new javax.swing.JLayeredPane();
         jRadioButton4 = new javax.swing.JRadioButton();
         jRadioButton5 = new javax.swing.JRadioButton();
+        jRadioButton10 = new javax.swing.JRadioButton();
         jToggleButton1 = new javax.swing.JToggleButton();
-        jButton1 = new javax.swing.JButton();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        jLabel6 = new javax.swing.JLabel();
+        jTextField6 = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jTextField7 = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioButton7 = new javax.swing.JRadioButton();
+        jRadioButton6 = new javax.swing.JRadioButton();
+        jLayeredPane6 = new javax.swing.JLayeredPane();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jRadioButton8 = new javax.swing.JRadioButton();
+        jRadioButton9 = new javax.swing.JRadioButton();
+        jLabel9 = new javax.swing.JLabel();
+        jLayeredPane5 = new javax.swing.JLayeredPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea2 = new javax.swing.JTextArea();
+        jTextField10 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLayeredPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Parámetros", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        jLayeredPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Crawling Parameters", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
-        jLabel1.setText("Semilla");
+        jLabel1.setText("Seed");
         jLabel1.setToolTipText("<html>\nIndica la página inicial en la que empezará el Crawling.<br><br>\n\nEjemplo:  http://www.upf.edu <br><br>\n\nSeparar por espacios las direcciones para obtener multiples páginas como Semilla <br><br>\n\nEjemplo: http://www.upf.edu http://www.tecnonews.info\n</html>"); // NOI18N
         jLabel1.setName("Semilla"); // NOI18N
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -132,14 +166,14 @@ public class mainMenu extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Profundidad");
-        jLabel2.setToolTipText("<html>\nIndica el número máximos de saltos que se harán desde la página seed.<br><br>\n\nSi la profundidad es -1, se analizarán profundidades ilimitadas.<br>\nSi la profundida es 0, solo se analizará la página Semilla.<br>\nSi la profundidad es >0 el máximo recorrido para cada uno de los enalces de la página A será el siguiente<br><br>\n\nEjemplo: Profundidad =  4<br>\n\"A\" -> \"B\" -> \"C\" -> \"D\" -> \"E\"<br><br>\n\nSiendo A la página Inicial<br>\nSiendo B un enlace de la página A<br>\nSiendo C un enlace de la página B<br>\nSiendo D n enlace de la página C<br>\nSiendo E un enlace de la página D<br><br>\n\nSi la profundidad introducida no es un valor correcto se utilizará \"-1\".\n</html>"); // NOI18N
+        jLabel2.setText("Depth");
+        jLabel2.setToolTipText("<html>\nIndica el número máximos de saltos que se harán desde la página seed.<br><br>\n\nSi la profundidad es -1, se analizarán profundidades ilimitadas.<br>\nSi la profundida es 0, solo se analizará la página Semilla.<br>\nSi la profundidad es >0 el máximo recorrido para cada uno de los enalces de la página A será el siguiente<br><br>\n\nEjemplo: Profundidad =  4<br>\n\"A\" -> \"B\" -> \"C\" -> \"D\" -> \"E\"<br><br>\n\nSiendo A la página Inicial<br>\nSiendo B un enlace de la página A<br>\nSiendo C un enlace de la página B<br>\nSiendo D n enlace de la página C<br>\nSiendo E un enlace de la página D<br><br>\n</html>"); // NOI18N
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setText("Crawlers");
-        jLabel3.setToolTipText("<html>\nNúmero de procesos concurrentes del crawler que recopilarán información. <br><br>\n\nejemplo: Crawlers = 5 <br><br>\nSe crearán 5 procesos que irán recopilando información. <br><br>\n\nEl valor mínimo es 1. <br>\nEn caso de poner un valor incorrecto, se usarán 5 crawlers.\n</html>"); // NOI18N
+        jLabel3.setToolTipText("<html>\nNúmero de procesos concurrentes del crawler que recopilarán información. <br><br>\n\nejemplo: Crawlers = 5 <br><br>\nSe crearán 5 procesos que irán recopilando información. <br><br>\n\nEl valor mínimo es 1. <br>\n</html>"); // NOI18N
 
-        jTextField3.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField3.setText("5");
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,19 +181,8 @@ public class mainMenu extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("Links Máximos");
-        jLabel4.setToolTipText("<html>\nEnlaces máximos que se analizarán <br><br>\n\nEjemplo: Links máximos = 200<br>\nSe analizarán 200 enlaces y el programa finalizará. <br>\n\nSi el valor introducido no es válido, se analizarán 5000 enlaces.<br><br>\n\nIntroducir \"-1\" para analizar sin límite <br>\nNo es recomendable ya que pueden existir millones de enalces por analizar.\n\n</html>"); // NOI18N
-
-        jTextField4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField4.setText("5000");
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setText("Tiempo (ms)");
-        jLabel5.setToolTipText("<html>\nTiempo entre llamadas a un servidor con el mismo host,  manera de respetar a terceros.<br><br>\n\nTiempo indicado en milisegundos.<br><br>\n\nValor mínimo de ms es de 50ms.<br><br>\nSi el valor introducido es erroneo, se utilizarán 50ms.\n\n</html>"); // NOI18N
+        jLabel5.setText("Time");
+        jLabel5.setToolTipText("<html>\nTiempo entre llamadas a un servidor con el mismo host,  manera de respetar a terceros.<br><br>\n\nTiempo indicado en milisegundos.<br><br>\n\nValor mínimo de ms es de 50ms.<br><br>\n</html>"); // NOI18N
 
         jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField5.setText("50");
@@ -177,25 +200,14 @@ public class mainMenu extends javax.swing.JFrame {
             }
         });
 
-        jRadioButton6.setText("Resumable");
-        jRadioButton6.setToolTipText("<html>\n\nContinuar analizando los enlaces de la última sesión. <br>\n\n</html>"); // NOI18N
-        jRadioButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton6ActionPerformed(evt);
-            }
-        });
-
         jLayeredPane3.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane3.setLayer(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane3.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane3.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane3.setLayer(jTextField3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane3.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane3.setLayer(jTextField4, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane3.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane3.setLayer(jTextField5, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane3.setLayer(jTextField9, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane3.setLayer(jRadioButton6, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane3Layout = new javax.swing.GroupLayout(jLayeredPane3);
         jLayeredPane3.setLayout(jLayeredPane3Layout);
@@ -203,32 +215,24 @@ public class mainMenu extends javax.swing.JFrame {
             jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jLayeredPane3Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                        .addContainerGap())
+                        .addComponent(jTextField1))
                     .addGroup(jLayeredPane3Layout.createSequentialGroup()
-                        .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton6)
-                            .addGroup(jLayeredPane3Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jLayeredPane3Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jLayeredPane3Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jLayeredPane3Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(21, 21, 21))
         );
         jLayeredPane3Layout.setVerticalGroup(
             jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,66 +244,89 @@ public class mainMenu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton6)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLayeredPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Condiciones de Enlace", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        jLayeredPane4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Analyse", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        jLayeredPane4.setToolTipText("<html>\n\nAnalizar en tiempo de ejecución <br>\n\n</html>"); // NOI18N
+
+        jRadioButton4.setText("Lang");
+        jRadioButton4.setToolTipText("<html>\nAnalizará el idioma de las páginas consideradas válidas<br><br>\n\nMETODOLOGÍA<br>\nBuscará el tag \"lang\" o \"xml:lang\" de la página `(muy fiable)<br><br>\nSi la página no dispone de estos tags, se buscará un parrafo y se intentará identificar el Idioma a partir de ese texto.(fiable)<br><br>\nSi la página no dispone de ningun tag \"p\", se cogerá el título y hará esa misma acción(muy poco fiable)\n</html>\n"); // NOI18N
+
+        jRadioButton5.setText("Emails");
+        jRadioButton5.setToolTipText("<html>\n\nRecopilará todos los emails contenidos en las páginas válidas.\n\n</html>"); // NOI18N
+
+        jRadioButton10.setText("Broken");
+        jRadioButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton10ActionPerformed(evt);
+            }
+        });
+
+        jLayeredPane4.setLayer(jRadioButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(jRadioButton5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane4.setLayer(jRadioButton10, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane4Layout = new javax.swing.GroupLayout(jLayeredPane4);
+        jLayeredPane4.setLayout(jLayeredPane4Layout);
+        jLayeredPane4Layout.setHorizontalGroup(
+            jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane4Layout.createSequentialGroup()
+                .addComponent(jRadioButton4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioButton5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jRadioButton10)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jLayeredPane4Layout.setVerticalGroup(
+            jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane4Layout.createSequentialGroup()
+                .addContainerGap(9, Short.MAX_VALUE)
+                .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton4)
+                    .addComponent(jRadioButton5)
+                    .addComponent(jRadioButton10)))
+        );
+
+        jToggleButton1.setText("Start");
+        jToggleButton1.setToolTipText("<html>\n\nStart: Inicia el Crawling <br><br>\n\nStop: Detiene el Crawling pasado 10segundos <br><br>\n\n</html>"); // NOI18N
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+
+        jLayeredPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Link Requirements", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
         jLayeredPane1.setToolTipText("<html>\n\nSelecciona multiples opciones para realizar una búsqueda más compleja. <br>\n\n\n</html>"); // NOI18N
 
-        jLabel6.setText("Contiene");
-        jLabel6.setToolTipText("<html>\n\nSolo se analizarán enlaces que contengan alguna de las palabras introducidas.<br>\n\nejemplo: upf <br><br>\n\nSi el enlace es: http://www.tecnonews.info     ,este no será analizado <br>\nSi el enlace es: http://www.upf.edu      ,este sí será analizado<br><br>\n\nSeparar palabras por espacios para añadir mutiples palabras. <br><br>\n\nejemplo: upf secretaria <br><br>\n\nSi el enlace es: http://www.upf.edu    , este no será analizado <br>\nSi el enalce es: http://www.upf.edu/test/secretaria/test    ,este si será analizado <br>\n\n</html>"); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Contains");
+        jLabel6.setToolTipText("<html>\n\nSolo seran válidos los enlaces que contengan ALMENOS UNA de las palabras introducidas.<br><br>\n\nejemplo: upf <br><br>\n\nSi el enlace es: http://www.tecnonews.info     ,este no será válido <br>\nSi el enlace es: http://www.upf.edu      ,este sí será válido<br><br>\n\nSeparar palabras por espacios para añadir mutiples palabras. <br><br>\n\nejemplo: upf secretaria <br><br>\n\nSi el enlace es: http://www.upf.edu    , este si será válido <br>\nSi el enalce es: http://www.upf.edu/test/secretaria/test    ,este si será válido <br>\nSi el enlace es: http://www.tecnonews.com   ,este no será válido.\n\n</html>"); // NOI18N
 
-        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton3ActionPerformed(evt);
-            }
-        });
-
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("RegEx");
-        jLabel7.setToolTipText("<html>\n\nSolo analizará enlaces que cumplan con la expresión regular introducita <br><br>\n\nEjemplo: .*(\\\\.(css))$ <br><br>\n\nAnalizará todos los enlaces que no terminen en .css\n\n</html>"); // NOI18N
+        jLabel7.setToolTipText("<html>\n\nSolo seran válidos aquellos enlaces que cumplan con la expresión regular introducita <br><br>\n\nEjemplo: .*(\\\\.(css))$ <br><br>\n\nTodos los enlaces que no terminen en .css serán válidos.\n\n</html>"); // NOI18N
 
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
-            }
-        });
-
-        jLabel8.setText("URL");
-        jLabel8.setToolTipText("<html>\n\nSolo se analizarán enlaces que tenga la URL especificada. <br><br>\n\nejemplo: http://www.upf.edu<br><br>\n\nBuscará enlaces que empiecen por: <html> <br><br>\n\nhttp://www.upf.edu <br>\nhttps://www.upf.edu <br>\nwww.upf.edu <br>\n\n</html>"); // NOI18N
-
-        jLabel9.setText("Max Slash");
-        jLabel9.setToolTipText("<html>\nAnalizará enlaces donde la cantidad de \"/\" del PATH del link no sea superior a este valor.<br><br>\n\nEjemplo: Max Slash = 3 <br><br>\n\nSi el enlace es http://www.upf.edu/parte1/parte2/parte3 <br><br>\n\nEl PATH es /parte1/parte2/      , por lo tanto sí que se analizará.<br><br>\n\nSi el enlace es http://www.upf.edu/parte1/parte2/parte3/parte4 <br><br>\n\nEl Path es /parte1/parte2/parte3/   , por lo tanto no se analizará. <br><br>\n\nEl valor -1 indicará que se analizarán ilimitados /\n\n</html>"); // NOI18N
-
-        jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField2.setText("-1");
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Avoid  ");
+        jLabel4.setToolTipText("<html>\n\nSolo serán válidos aquellos enlaces que no contengan ninguna de las palabras introducidas.<br><br>\n\nejemplo: upf <br><br>\n\nSi el enlace es: http://www.tecnonews.info     ,este será válido <br>\nSi el enlace es: http://www.upf.edu      ,este no será válido<br><br>\n\nSeparar palabras por espacios para añadir mutiples palabras. <br><br>\n\nejemplo: upf secretaria <br><br>\n\nSi el enlace es: http://www.upf.edu    , este no será válido <br>\nSi el enalce es: http://www.tecnonews.info    ,este si será válido <br>\n\n</html>"); // NOI18N
 
         jLayeredPane1.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jTextField6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jRadioButton3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jTextField7, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jLabel11, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jTextField4, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jRadioButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jRadioButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jTextField8, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLabel11, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLabel9, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jTextField2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(jRadioButton7, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
         jLayeredPane1.setLayout(jLayeredPane1Layout);
@@ -309,132 +336,164 @@ public class mainMenu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel11)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
                         .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jRadioButton2)
+                            .addComponent(jRadioButton7)
+                            .addComponent(jRadioButton1, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                                .addComponent(jTextField7)
+                                .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton2))
+                                .addComponent(jTextField6))
                             .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                                .addComponent(jTextField6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton1))))
-                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
-                            .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel4))
+                                .addGap(13, 13, 13)
+                                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField7)
+                                    .addComponent(jTextField4))))))
                 .addContainerGap())
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel8)
-                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jRadioButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel6)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jRadioButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel7)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jRadioButton2))
-                .addGap(10, 10, 10)
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(11, 11, 11)
+                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(8, 8, 8)
+                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addGap(8, 8, 8)
+                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)))
+                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                        .addComponent(jRadioButton1)
+                        .addGap(6, 6, 6)
+                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
+                                .addComponent(jRadioButton2)
+                                .addGap(28, 28, 28))
+                            .addComponent(jRadioButton7, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel11))
         );
 
-        jLayeredPane4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Analizar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
-        jLayeredPane4.setToolTipText("<html>\n\nAnalizar en tiempo de ejecución <br>\n\n</html>"); // NOI18N
+        jRadioButton6.setText("Resumable");
+        jRadioButton6.setToolTipText("<html>\n\nSi activamos esta opción antes de pulsar START, guardaremos los enlaces<br>\nTEMPORALES que se han obtenido durante esta sesión. ESTA OPCIÓN REALENTIZA EL PROCESO<br><br>\n\nSi antes de iniciar la proxima sesion de crawling, activamos el Resumable,<br>\nse continuaran analizando los enlaces que se obtuvieron en la sesión previa. <br>(unicamente si la opción tambien estuvo activa)<br><br>\n\nEn caso de no activar el Resumable antes del inicio de una sesion,<br>se borrará aquella información temporal.<br><br>\n\nEs una opcion útil pero NO RECOMENDADA\n\n\n\n</html>"); // NOI18N
+        jRadioButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton6ActionPerformed(evt);
+            }
+        });
 
-        jRadioButton4.setText("Idioma");
-        jRadioButton4.setToolTipText("<html>\nAnaliza el idioma de la página extraida <br>\n\nBuscará el tag \"lang\" o \"xml:lang\" de la página <br><br>\nSi la página no dispone de estos tags, se buscará un parrafo y se intentará identificar el Idioma a partir de ese texto. <br><br>\n\nSi la página no dispone de ningun tag \"p\", se cogerá el título y hará esa misma acción <br>\n\n</html>\n"); // NOI18N
+        jLayeredPane6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Content Requirements", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
-        jRadioButton5.setText("Emails");
-        jRadioButton5.setToolTipText("<html>\n\nRecopilará todos los emails del enlace.\n\n</html>"); // NOI18N
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
 
-        jLayeredPane4.setLayer(jRadioButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane4.setLayer(jRadioButton5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLabel8.setText("Contains");
+        jLabel8.setToolTipText("<html>\n\nSolo serán válidos aquellos enlaces que su contenido cumpla con lo indicado.<br><br>\n\nAt least one : Almenos uno de los terminos listados se encuentra en la página <br><br>\n\nAll: Todos los terminos listados se encuentran en la página <br><br>\n\nNone: Ninguno de los terminos listados se encuentra en la página <br><br>\n\n</html>"); // NOI18N
 
-        javax.swing.GroupLayout jLayeredPane4Layout = new javax.swing.GroupLayout(jLayeredPane4);
-        jLayeredPane4.setLayout(jLayeredPane4Layout);
-        jLayeredPane4Layout.setHorizontalGroup(
-            jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jRadioButton4)
+        jRadioButton3.setText("None");
+        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton3ActionPerformed(evt);
+            }
+        });
+
+        jRadioButton8.setText("At least one");
+        jRadioButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton8ActionPerformed(evt);
+            }
+        });
+
+        jRadioButton9.setText("All");
+        jRadioButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton9ActionPerformed(evt);
+            }
+        });
+
+        jLayeredPane6.setLayer(jTextField2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane6.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane6.setLayer(jRadioButton3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane6.setLayer(jRadioButton8, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane6.setLayer(jRadioButton9, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane6Layout = new javax.swing.GroupLayout(jLayeredPane6);
+        jLayeredPane6.setLayout(jLayeredPane6Layout);
+        jLayeredPane6Layout.setHorizontalGroup(
+            jLayeredPane6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton5))
+                .addGroup(jLayeredPane6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jLayeredPane6Layout.createSequentialGroup()
+                        .addComponent(jRadioButton8)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jLayeredPane6Layout.createSequentialGroup()
+                        .addComponent(jTextField2)
+                        .addGap(10, 10, 10))
+                    .addGroup(jLayeredPane6Layout.createSequentialGroup()
+                        .addGroup(jLayeredPane6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jRadioButton9)
+                            .addComponent(jRadioButton3))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
-        jLayeredPane4Layout.setVerticalGroup(
-            jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane4Layout.createSequentialGroup()
+        jLayeredPane6Layout.setVerticalGroup(
+            jLayeredPane6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jLayeredPane4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton4)
-                    .addComponent(jRadioButton5)))
+                .addGroup(jLayeredPane6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioButton8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioButton9))
         );
-
-        jToggleButton1.setText("Start");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton1.setText("Exit");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         jLayeredPane2.setLayer(jLayeredPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(jLayeredPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jLayeredPane4, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jToggleButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane2.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jLayeredPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jRadioButton6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jLayeredPane6, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
         jLayeredPane2.setLayout(jLayeredPane2Layout);
         jLayeredPane2Layout.setHorizontalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                        .addComponent(jToggleButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jRadioButton6))
+                    .addComponent(jLayeredPane1)
+                    .addComponent(jLayeredPane3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLayeredPane1)
-                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                        .addComponent(jLayeredPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(20, Short.MAX_VALUE))))
+                    .addComponent(jLayeredPane6)
+                    .addComponent(jLayeredPane4)))
         );
         jLayeredPane2Layout.setVerticalGroup(
             jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -442,34 +501,86 @@ public class mainMenu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                        .addComponent(jLayeredPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLayeredPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jLayeredPane2Layout.createSequentialGroup()
+                        .addComponent(jLayeredPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLayeredPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLayeredPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jLayeredPane2Layout.createSequentialGroup()
-                                .addComponent(jToggleButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1))))
-                    .addComponent(jLayeredPane3))
-                .addContainerGap())
+                        .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jToggleButton1)
+                            .addComponent(jRadioButton6))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jLabel9.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel9.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 0, 204));
+        jLabel9.setText("?");
+        jLabel9.setToolTipText("<html>\n\n<b>CRAWLING PARAMETERS</b> <hr><br>\n\nIndicará la lógica del comportamiento que serguirá el Crawler.<br><br>\n\n<b> SEED </b> será la página inicial sobre la cual empezará a recopilar enlaces<br>\n<b> CRAWELERS </b> cantidad de procesos concurrentes<br>\n<b> DEEP </b> Saltos máximos que se realizarán desde la página(s) seed.<br>\n<b> TIME </b> Tiempo entre llamadas a los enlaces.<br>\n\n<br>\n<b>LINK REQUIREMENTS</b><hr><br>\n\nIndica la lógica de que enlace puede ser válido o no serlo.<br>\n<b><i>esta lógica actua sobre el enlace, no sobre el contenido de este.</b></i><br>\nPara que un enlace se considere válido a nivel de enlace, debe cumplir con<br>\nlas condiciones que se han escogido.<br><br>\n\n<b>CONTAINS</b> El enlace será valido si alguno de los terminos aparece en el enlace<br>\n<b>REGEX</b> El enlace será valido si cumple con la expresión regular indicada<br>\n<b>AVOID</b> El enlace será valido si no ningun termino aparece en él<br><br>\n\n<u>Estas condiciones son acumulativas,es decir, el enlace deberá cumplir con todas<br>\nlas condiciones indicas para considerarse como enlace válido.</u><br><br>\n\n<b>CONTENT REQUIREMENTS</b><hr><br>\n\nIndica la lógica de que el contenido de un enlace sea válido o no.<br>\n<b><i>esta lógica actúa sobre el contenido del enlace</b></i><br>\nPara que un enlace se considere válido a nivel de contenido, este debe cumplir con<br>\nla condición escogida.<br><br>\n\n<b>At Least One</b> Será válido si aparece almenos uno de los terminos en el contenido<br>\n<b>All</b> Será válido si aparece todos los terminos en el contenido<br>\n<b>None</b> Será válido si no aparece ninguno de los terminos en el contenido<br><br>\n\n<u><i> UN ENLACE SERÁ VALIDO SI Y SOLO SI, CUMPLE CON TODAS LAS CONDICIONES<br> TANTO A NIVEL DE ENLACE COMO DE CONTENIDO</u></i><br><br>\n\n\n<b>ANALISY<b><br><hr><br>\n\nLogica encargada de analizar los enlaces <b>VALIDOS</b><br><br>\n\n<b>EMAILS</b> Recopila todos los emails del enlace considerado VALIDO<br>\n<b>IDIOMA</b> Dictamina en que lengua se encuentra la página <br>\n\n</html"); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLayeredPane2))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLayeredPane2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jLayeredPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jLayeredPane2)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel9)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("CRAWLING", jPanel1);
+
+        jTextArea2.setBackground(new java.awt.Color(0, 0, 0));
+        jTextArea2.setColumns(20);
+        jTextArea2.setFont(new java.awt.Font("Consolas", 1, 12)); // NOI18N
+        jTextArea2.setForeground(new java.awt.Color(51, 255, 51));
+        jTextArea2.setRows(5);
+        jTextArea2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextArea2MouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTextArea2);
+
+        jTextField10.setBackground(new java.awt.Color(0, 0, 0));
+        jTextField10.setFont(new java.awt.Font("Consolas", 1, 11)); // NOI18N
+        jTextField10.setForeground(new java.awt.Color(51, 255, 51));
+        jTextField10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField10ActionPerformed(evt);
+            }
+        });
+
+        jLayeredPane5.setLayer(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane5.setLayer(jTextField10, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane5Layout = new javax.swing.GroupLayout(jLayeredPane5);
+        jLayeredPane5.setLayout(jLayeredPane5Layout);
+        jLayeredPane5Layout.setHorizontalGroup(
+            jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+            .addComponent(jTextField10, javax.swing.GroupLayout.Alignment.LEADING)
+        );
+        jLayeredPane5Layout.setVerticalGroup(
+            jLayeredPane5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPane5Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jTabbedPane1.addTab("CONSOLE", jLayeredPane5);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -485,55 +596,88 @@ public class mainMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
         // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jTextField10ActionPerformed
+
+    private void jTextArea2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextArea2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextArea2MouseClicked
+
+    private void jRadioButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton9ActionPerformed
+        // TODO add your handling code here:
+        jRadioButton8.setSelected(false);
+        jRadioButton3.setSelected(false);
+    }//GEN-LAST:event_jRadioButton9ActionPerformed
+
+    private void jRadioButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton8ActionPerformed
+        // TODO add your handling code here:
+        jRadioButton9.setSelected(false);
+        jRadioButton3.setSelected(false);
+    }//GEN-LAST:event_jRadioButton8ActionPerformed
+
+    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+        // TODO add your handling code here:
+        jRadioButton9.setSelected(false);
+        jRadioButton8.setSelected(false);
+    }//GEN-LAST:event_jRadioButton3ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jRadioButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton6ActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         // TODO add your handling code here:
         if (jToggleButton1.getText() == "Start") {
-            jToggleButton1.setText("Stop");
-            CrawlConfig config = new CrawlConfig();
-            
-            //Fetch parameters from Main Menu
-            this.getAllParamsFromMenu();
-            
-            //Set parameters to the Crawler Config
-            int numberOfCrawlers = this.crawlers;
-            config.setMaxDepthOfCrawling(this.profundidad);
-            config.setMaxPagesToFetch(this.links);
-            config.setResumableCrawling(this.isResumable);
-            config.setPolitenessDelay(this.tiempo);
-            config.setCrawlStorageFolder("/src");
-            
-            
-            PageFetcher pageFetcher = new PageFetcher(config);
-            RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
-            RobotstxtServer robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher);
-            CrawlController controller = null;
-            try {
-                controller = new CrawlController(config, pageFetcher, robotstxtServer, menu);
-            } catch (Exception ex) {
-                Logger.getLogger(mainMenu.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            if(validateParams())
+            {
+                Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+                public void run() {
+                    MyExcel excel = new MyExcel();
+                    excel.importToExcel("Resultados.xlsx", data);
+                }
+                }, "Shutdown-thread"));
+                jToggleButton1.setText("Stop");
+                CrawlConfig config = new CrawlConfig();
 
-            addSeeds(this.semilla, controller);
-            controller.startNonBlocking(MyCrawler.class, numberOfCrawlers);
-            
+                //Fetch parameters from Main Menu
+                //this.getAllParamsFromMenu();
+                //Set parameters to the Crawler Config
+                int numberOfCrawlers = this.crawlers;
+                config.setMaxDepthOfCrawling(this.profundidad);
+                config.setResumableCrawling(this.isResumable);
+                config.setPolitenessDelay(this.tiempo);
+                config.setCrawlStorageFolder("src");
+                menu.consoleParams();
+                //System.out.println(numberOfCrawlers);
+                PageFetcher pageFetcher = new PageFetcher(config);
+                RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
+                RobotstxtServer robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher);
+                CrawlController controller = null;
+                try {
+                    controller = new CrawlController(config, pageFetcher, robotstxtServer, menu);
+                    this.controller = controller;
+                } catch (Exception ex) {
+                    Logger.getLogger(mainMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                addSeeds(this.semilla, controller);
+                controller.startNonBlocking(MyCrawler.class, numberOfCrawlers);
+            }
         } else {
             jToggleButton1.setText("Start");
+            this.controller.shutdown();
         }
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
-
-    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton3ActionPerformed
-
+  /*  public void updateBar(int newValue) {
+    jProgressBar2.setValue(newValue);
+  }*/
+    
     private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField9ActionPerformed
@@ -554,83 +698,181 @@ public class mainMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel1MouseEntered
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void jRadioButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton10ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_jRadioButton10ActionPerformed
 
-    private void jRadioButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton6ActionPerformed
-
-    //SET PARAMS
+    
+    //SET PARAMSF
     public void setSemilla(String n) {this.semilla = n.split("\\s+");}
     public void setCrawlers(int n) {this.crawlers = n;}
     public void setProfundidad(int n) {this.profundidad = n;}
-    public void setMaxLinks(int n) {this.links = n;}
     public void setTiempo(int n) {this.tiempo = n;}
     public void setIsResumable(boolean n){this.isResumable = n;}
     public void setIsContiene(boolean n){this.isContiene = n;}
-    public void setIsURL(boolean n){this.isURL = n;}
+    public void setIsNoContiene(boolean n){this.isNoContiene = n;}
     public void setIsRegex(boolean n){this.isRegex = n;}
-    public void setSlash(int n){this.slash = n;}
     public void setContiene(String n){this.contiene = n.split("\\s+");}
-    public void setURL(String n){this.url = n.split("\\s+");}
+    public void setNoContiene(String n){this.noContiene = n.split("\\s+");}
     public void setRegex(String n){this.regex = n;}
     public void setIsIdioma(boolean n){this.isIdioma = n;}
     public void setIsEmails(boolean n){this.isEmails = n;}
     
+    public void setIsAtLeast(boolean n){this.isAtLeast = n;}
+    public void setIsAll(boolean n){this.isAll = n;}
+    public void setIsNone(boolean n){this.isNone = n;}
+    public void setContains(String n){this.contains = n.split("\\s+");}
+    public void setIsBroken (boolean n){this.isBroken = n;}
     //GET CRAWLING PARAMETERS FROM MENU
     public String getSemilla() {return this.jTextField1.getText();}
     public String getCrawlers() {return this.jTextField3.getText();}
     public String getProfundidad() {return this.jTextField9.getText();}
-    public String getMaxLinks() {return this.jTextField4.getText();}
     public String getTiempo() {return this.jTextField5.getText();}
-    public String getURL() {return this.jTextField8.getText();}
     public String getContiene() {return this.jTextField6.getText();}
+    public String getNoContiene() {return this.jTextField4.getText();}
     public String getRegEx() {return this.jTextField7.getText();}
-    public String getMaxSlash() {return this.jTextField2.getText();}
+    public String getContains() {return this.jTextField2.getText();}
     
+    public Boolean getIsBroken() {return this.jRadioButton10.isSelected();}
     public Boolean getIsResumable() {return this.jRadioButton6.isSelected();}
-    public Boolean getIsURL() {return this.jRadioButton3.isSelected();}
     public Boolean getIsContiene() {return this.jRadioButton1.isSelected();}
+    public Boolean getIsNoContiene() {return this.jRadioButton7.isSelected();}
     public Boolean getIsRegEx() {return this.jRadioButton2.isSelected();}
     public Boolean getIsIdioma(){return this.jRadioButton4.isSelected();}
-    public Boolean getIsEmails(){return this.jRadioButton5.isSelected();}      
-    //COMPROBAR VALIDEZ DE PARAMETROS
-    public void validateParams(String _crawlers, String _profundidad, String _maxLinks, String _tiempo, String _slash) {
-        try {
-            if(Integer.parseInt(_crawlers) >= 1) setCrawlers(Integer.parseInt(_crawlers));
-        }
-        catch (NumberFormatException e) {
-            //donothing
-        }
-        
-        try {
-            if(Integer.parseInt(_profundidad) >= -1) this.profundidad = Integer.parseInt(_profundidad);
-        }
-        catch (NumberFormatException e) {
-            //donothing
-        }
-        
-        try {
-            if(Integer.parseInt(_maxLinks) >= -1) this.links = Integer.parseInt(_maxLinks);
-        }
-        catch (NumberFormatException e) {
-            //donothing
-        }
+    public Boolean getIsEmails(){return this.jRadioButton5.isSelected();}
+    public Boolean getIsAtLeast() {return this.jRadioButton8.isSelected();}
+    public Boolean getIsAll(){return this.jRadioButton9.isSelected();}
+    public Boolean getIsNone(){return this.jRadioButton3.isSelected();}
+    
+    public void writeConsole(String s)
+    {
+        jTextArea2.append(s);
 
+    }
+    //COMPROBAR VALIDEZ DE PARAMETROS
+    public boolean validateParams() {
+        jTextArea2.setText("*********\n* ERROR *\n*********\n\n");
+        if(getSemilla().replaceAll(" ","").length() == 0)
+        {
+            jTabbedPane1.setSelectedIndex(1);
+            jTextArea2.append("CRAWLER PARAMETERES -> SEED | EL CAMPO ESTA VACIO");
+            return false;
+        }
+        else setSemilla(getSemilla());
+      
         try {
-            if(Integer.parseInt(_tiempo) >= 50) this.tiempo = Integer.parseInt(_tiempo);
+            if(Integer.parseInt(this.getCrawlers()) >= 1) setCrawlers(Integer.parseInt(this.getCrawlers()));
+            else
+            {
+                jTabbedPane1.setSelectedIndex(1);
+                jTextArea2.append("CRAWLER PARAMETERES -> CRAWLERS | DEBE SER >= 1.");
+                return false;
+            }
         }
         catch (NumberFormatException e) {
             //donothing
+            jTabbedPane1.setSelectedIndex(1);
+            jTextArea2.append("CRAWLER PARAMETERES -> CRAWLERS | DEBE SER UN NUMERO");
+            return false;
         }
+        
         try {
-            if(Integer.parseInt(_slash) > 0) this.slash = Integer.parseInt(_slash);
+            if(Integer.parseInt(this.getProfundidad()) >= -1) this.profundidad = Integer.parseInt(this.getProfundidad());
+            else
+            {
+                jTabbedPane1.setSelectedIndex(1);
+                jTextArea2.append("CRAWLER PARAMETERES -> DEPTH | DEBE SER >= -1");
+                return false;
+            }
         }
         catch (NumberFormatException e) {
-            //donothing
+            jTabbedPane1.setSelectedIndex(1);
+            jTextArea2.append("CRAWLER PARAMETERES -> DEPTH | DEBE SER UN NUMERO");
+            return false;
         }
+        
+        try {
+            if(Integer.parseInt(this.getTiempo()) >= 50) this.tiempo = Integer.parseInt(this.getTiempo());
+            else
+            {
+                jTabbedPane1.setSelectedIndex(1);
+                jTextArea2.append("CRAWLER PARAMETERES -> TIME | DEBE SER >= 50");
+                return false;
+            }
+        }
+        catch (NumberFormatException e) {
+                jTabbedPane1.setSelectedIndex(1);
+                jTextArea2.append("CRAWLER PARAMETERES -> TIME | DEBE SER UN NUMERO");
+                return false;
+        }
+        
+        //LINK REQUIREMETS
+          //CONTAINS
+        if(getIsContiene() && getContiene().replaceAll(" ","").length() == 0)
+        {
+                jTabbedPane1.setSelectedIndex(1);
+                jTextArea2.append("LINK REQUIREMENTS -> CONTAINS \nOPCION SELECCIONADA PERO EL CAMPO ESTÁ VACIO\nDESELECCIONA LA OPCION O RELLENA EL CAMPO");
+                return false;           
+        }
+        else if(!getIsContiene() && getContiene().replaceAll(" ","").length() > 0)
+        {
+                jTabbedPane1.setSelectedIndex(1);
+                jTextArea2.append("LINK REQUIREMENTS -> CONTAINS \nCAMPO RELLENO PERO LA OPCIÓN NO ESTÁ SELECCIONADA\nSELECCIONA LA OPCION O BORRA EL CAMPO");
+                return false;           
+        }
+        else if(getIsContiene() && getContiene().replaceAll(" ","").length() > 0){setContiene(getContiene());setIsContiene(true);}
+        
+          //REGEX
+        if(getIsRegEx()&& getRegEx().replaceAll(" ","").length() == 0)
+        {
+                jTabbedPane1.setSelectedIndex(1);
+                jTextArea2.append("LINK REQUIREMENTS -> REGEX \nOPCION SELECCIONADA PERO EL CAMPO ESTÁ VACIO\nDESELECCIONA LA OPCION O RELLENA EL CAMPO");
+                return false;           
+        }
+        else if(!getIsRegEx() && getRegEx().replaceAll(" ","").length() > 0)
+        {
+                jTabbedPane1.setSelectedIndex(1);
+                jTextArea2.append("LINK REQUIREMENTS -> REGEX \nCAMPO RELLENO PERO LA OPCIÓN NO ESTÁ SELECCIONADA\nSELECCIONA LA OPCION O BORRA EL CAMPO");
+                return false;           
+        }
+        else if(getIsRegEx() && getRegEx().replaceAll(" ","").length() > 0){setRegex(getRegEx());setIsRegex(true);}
+        
+           //AVOID
+        if(getIsNoContiene() && getNoContiene().replaceAll(" ","").length() == 0)
+        {
+                jTabbedPane1.setSelectedIndex(1);
+                jTextArea2.append("LINK REQUIREMENTS -> AVOID \nOPCION SELECCIONADA PERO EL CAMPO ESTÁ VACIO\nDESELECCIONA LA OPCION O RELLENA EL CAMPO");
+                return false;           
+        }
+        else if(!getIsNoContiene() && getNoContiene().replaceAll(" ","").length() > 0)
+        {
+                jTabbedPane1.setSelectedIndex(1);
+                jTextArea2.append("LINK REQUIREMENTS -> AVOID \nCAMPO RELLENO PERO LA OPCIÓN NO ESTÁ SELECCIONADA\nSELECCIONA LA OPCION O BORRA EL CAMPO");
+                return false;           
+        }
+        else if(getIsNoContiene() && getNoContiene().replaceAll(" ","").length() > 0){setNoContiene(getNoContiene());setIsNoContiene(true);}
+        
+        if((getIsAll() || getIsNone() || getIsAtLeast()) && getContains().replaceAll(" ","").length() == 0)
+        {
+            jTabbedPane1.setSelectedIndex(1);
+            jTextArea2.append("CONTENT REQUIREMENTS -> CONTAINS \nOPCION SELECCIONADA PERO EL CAMPO ESTÁ VACIO\nDESELECCIONA UNA OPCION O RELLENA EL CAMPO");
+            return false; 
+        }
+        else if(!(getIsAll() || getIsNone() || getIsAtLeast()) && getContains().replaceAll(" ","").length() > 0)
+        {
+            jTabbedPane1.setSelectedIndex(1);
+            jTextArea2.append("CONTENT REQUIREMENTS -> CONTAINS \nCAMPO RELLENO PERO NIGUNA OPCIÓN ESTÁ SELECCIONADA\nSELECCIONA UNA OPCION O BORRA EL CAMPO");
+            return false;         
+        }
+        else if((getIsAll() || getIsNone() || getIsAtLeast()) && getContains().replaceAll(" ","").length() > 0) setContains(getContains());
+        setIsBroken(getIsBroken());
+        setIsAll(getIsAll());
+        setIsAtLeast(getIsAtLeast());
+        setIsNone(getIsNone());
+        setIsResumable(getIsResumable());
+        setIsIdioma(getIsIdioma());
+        setIsEmails(getIsEmails());
+        return true;
 }
 
     public void addSeeds(String[] s, CrawlController controller)
@@ -646,10 +888,15 @@ public class mainMenu extends javax.swing.JFrame {
     public void getAllParamsFromMenu()
     {
         setSemilla(getSemilla());
-        validateParams(this.getCrawlers(),this.getProfundidad(),this.getMaxLinks(),this.getTiempo(),this.getMaxSlash()); 
-        if(getIsURL()) {setURL(getURL());setIsURL(true);}
+        //validateParams(this.getCrawlers(),this.getProfundidad(),this.getTiempo()); 
         if(getIsContiene()) {setContiene(getContiene());setIsContiene(true);}
+        if(getIsNoContiene()) {setNoContiene(getNoContiene());setIsNoContiene(true);}
         if(getIsRegEx()) {setRegex(getRegEx());setIsRegex(true);}
+        
+        if(getIsAll()) {setContains(getContains());setIsAll(true);}
+        else if(getIsAtLeast()) {setContains(getContains());setIsAtLeast(true);}
+        else if(getIsNone()) {setContains(getContains());setIsNone(true);}
+        
         setIsResumable(getIsResumable());
         setIsIdioma(getIsIdioma());
         setIsEmails(getIsEmails());
@@ -689,13 +936,114 @@ public class mainMenu extends javax.swing.JFrame {
         });
     }
 
+    public void consoleParams()
+    {
+        String url = "";
+        String contiene = "";
+        String noContiene = "";
+        String regEx = "";
+        String seeders = "";
+        String ejec = "";
+        String contains = "No hay restriccion a nivel de contenido del enlace\n";
+        
+        if(this.isEmails)ejec += "Se analizaran emails.\n";
+        if(this.isIdioma) ejec += "Se analizara el idioma.\n";
+        if(this.isBroken) ejec += "Se analizaran los enlaces caidos.\n";
+        if(ejec.isEmpty()) ejec = "No se analizara nada en tiempo de ejecucion.";
+        
+        if(!this.isContiene && !this.isRegex && !this.isNoContiene) url = "Se analizaran todos los enlaces.";
+        if(this.semilla.length >0)
+        {
+            seeders = "\n\t-Se utilizara como semilla-\n\n";
+            for(int i = 0; i < this.semilla.length; ++i)
+            {
+                seeders += this.semilla[i] + "\n";
+            }   
+        }
+        
+        if(this.isContiene && this.contiene.length >0)
+        {
+            contiene = "\n\t-Contiene alguno de estos terminos-\n\n";
+            for(int i = 0; i < this.contiene.length; ++i)
+            {
+                contiene += this.contiene[i] + "\n";
+            }   
+        }
+        
+        if(this.isNoContiene && this.noContiene.length >0)
+        {
+            noContiene = "\n\t-No contiene ninguno de estos terminos-\n\n";
+            for(int i = 0; i < this.noContiene.length; ++i)
+            {
+                noContiene += this.noContiene[i] + "\n";
+            }   
+        }
+        
+        if(this.isRegex && !this.regex.isEmpty())
+        {
+            regEx = "\n\t-Cumple la expresion regular-\n\n";
+            regEx += this.regex + "\n";
+        }
+        
+        
+        if(this.isAll && this.contains.length >0)
+        {
+            contains = "\n\t-Contiene todos los terminos siguientes-\n\n";
+            for(int i = 0; i < this.contains.length; ++i)
+            {
+                contains += this.contains[i] + "\n";
+            } 
+        }
+        
+        else if(this.isNone && this.contains.length >0)
+        {
+            contains = "\n\t-No contiene los terminos siguientes-\n\n";
+            for(int i = 0; i < this.contains.length; ++i)
+            {
+                contains += this.contains[i] + "\n";
+            } 
+        }
+        
+        if(this.isAtLeast && this.contains.length >0)
+        {
+            contains = "\n\t-Contiene almenos uno de los terminos siguientes-\n\n";
+            for(int i = 0; i < this.contains.length; ++i)
+            {
+                contains += this.contains[i] + "\n";
+            } 
+        }
+        if((url+contiene+noContiene+regEx).isEmpty()) url = "No hay restricción a nivel de enlace.\n";
+        writeConsole("Iniciando el Crawling...");
+        String s = "\n\n\n   **************************\n   *  \t     CRAWLER        *\n   **************************\n\n\n"
+                + "\t-Numero de Crawlers-\n\n\t\t" + this.crawlers + "\n\n"
+                + "\t   -Produnfidad-\n\n\t\t" + this.profundidad  + "\n\n" 
+                + "\t-Tiempo entre llamadas-\n\n\t\t" + this.tiempo + "ms\n\n"
+                + "\t     -Resumable-\n\n\t\t" + this.isResumable + "\n\n"
+                + seeders
+                + "\n\n\n   **************************\n   * CONDICIONES DEL ENLACE *\n   **************************\n\n\n"
+                + url
+                + contiene
+                + noContiene
+                + regEx
+                + "\n\n\n   *****************************\n   * CONDICIONES DEL CONTENIDO *\n   *****************************\n\n\n"
+                + contains
+                + "\n\n\n   *************************\n   * ANALIZAR EN EJECUCION *\n   *************************\n\n"
+                + ejec
+                + "\n\n\n------------INICIO----------\n\n\n";
+        writeConsole(s);
+    }
+           
+    public void setTextStats(String s)
+    {
+        jTextField10.setText(s);
+    }
+         
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.ButtonGroup buttonGroup4;
     private javax.swing.ButtonGroup buttonGroup5;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
@@ -710,22 +1058,31 @@ public class mainMenu extends javax.swing.JFrame {
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JLayeredPane jLayeredPane3;
     private javax.swing.JLayeredPane jLayeredPane4;
+    private javax.swing.JLayeredPane jLayeredPane5;
+    private javax.swing.JLayeredPane jLayeredPane6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton10;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JRadioButton jRadioButton5;
     private javax.swing.JRadioButton jRadioButton6;
+    private javax.swing.JRadioButton jRadioButton7;
+    private javax.swing.JRadioButton jRadioButton8;
+    private javax.swing.JRadioButton jRadioButton9;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables

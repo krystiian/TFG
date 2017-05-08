@@ -31,8 +31,32 @@ public class MyCrawler extends WebCrawler {
      public boolean shouldVisit(Page referringPage, WebURL url) {
          String href = url.getURL().toLowerCase();
          mainMenu menu = this.getMyController().menu;
-         return !FILTERS.matcher(href).matches()
-                && isUnderCondition(menu, url);//(href.startsWith("http://www.upf.edu/") || href.startsWith("https://www.upf.edu"));
+         if(FILTERS.matcher(href).matches()) return false;
+         menu.enlacesTotales += 1;
+         menu.setTextStats(menu.enlacesTotales + " ENLACES   |   " + menu.enlacesValidos + " VALIDOS   |   " + menu.enlacesAnalizados + " ANALIZADOS  |  " + menu.enlacesErroneos + " ERROR  |  " + menu.emailsFetched + " EMAILS");
+         if(isUnderCondition(menu, url) && algorithms.pageContainsContent(referringPage, menu.contains, menu.isAll, menu.isAtLeast, menu.isNone)){
+             menu.enlacesValidos += 1;
+             if(href.contains("?")) url.setPriority((byte)1);
+         }
+         else url.setPriority((byte)2);
+         return true;
+         /*for(int i = 0; i < menu.semilla.length; ++i)
+         {
+             String semilla = removePrefix(menu.semilla[i]);
+             String urlr = removePrefix(href);
+             if(semilla.equals(urlr) || urlr.equals(semilla+"/"))
+             {
+                 menu.enlacesValidos += 1;
+                 return true;
+             }
+         }
+        if(!FILTERS.matcher(href).matches() && isUnderCondition(menu, url))
+        {
+            menu.enlacesValidos += 1;
+            return true;
+        }
+        return false;
+         */
      }
 
      /**
@@ -42,20 +66,17 @@ public class MyCrawler extends WebCrawler {
      @Override
      public void visit(Page page) {
          String url = page.getWebURL().getURL();
-         if (page.getParseData() instanceof HtmlParseData) {
-             HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
-             //this.getMyController().getJF().getJ3().setText(Integer.toString(htmlParseData.getOutgoingUrls().size()));
-             String text = htmlParseData.getText();
-             String html = htmlParseData.getHtml();  
-             String title = htmlParseData.getTitle();
+         mainMenu menu = this.getMyController().menu;
+         if (page.getParseData() instanceof HtmlParseData && isUnderCondition(menu, page.getWebURL()) && algorithms.pageContainsContent(page, menu.contains, menu.isAll, menu.isAtLeast, menu.isNone)) {
+             //menu.updateBar((int)Math.floor(menu.enlacesAnalizados/(double)menu.links*100));
+             //menu.enlacesValidos += 1;
+             //menu.setTextStats(menu.enlacesTotales + " ENLACES   |   " + menu.enlacesValidos + " VALIDOS   |   " + menu.enlacesAnalizados + " ANALIZADOS  |  " + menu.enlacesErroneos + " ERROR  |  " + menu.emailsFetched + " EMAILS");
+             HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();             
              Set<WebURL> links = htmlParseData.getOutgoingUrls();
              
-             
-             System.out.println(url);
-             System.out.println("STATUS CODE: " + page.getStatusCode());
-             System.out.println("LANG: " + algorithms.detectLanguage(page));
-             System.out.print("EMAILS: ");
-             algorithms.printAllEmails(algorithms.detectEmails(page));
+             menu.writeConsole(tiempoEjecucion(page,menu));
+             menu.enlacesAnalizados += 1;
+             menu.setTextStats(menu.enlacesTotales + " ENLACES   |   " + menu.enlacesValidos + " VALIDOS   |   " + menu.enlacesAnalizados + " ANALIZADOS  |  " + menu.enlacesErroneos + " ERROR  |  " + menu.emailsFetched + " EMAILS");
          }
     }
      
@@ -69,20 +90,7 @@ public class MyCrawler extends WebCrawler {
      }
      public Boolean isUnderCondition(mainMenu menu, WebURL href)
      {
-         Boolean found = false;
          String s = href.getURL().toLowerCase();
-         if(menu.isURL)
-         {
-          boolean foundURL = false;
-          String[] URL = menu.url;
-          for(int i=0; i < URL.length; ++i)
-          {
-              String url = URL[i];
-              url = removePrefix(url);
-              if(s.startsWith("http://" + url) || s.startsWith("https://" + url) || s.startsWith("http:\\\\" + url) || s.startsWith("https:\\\\" + url)) foundURL = true;    
-          }
-          if(!foundURL) return false;
-         }
          if(menu.isContiene)
          {
              boolean foundContiene = false;
@@ -93,21 +101,39 @@ public class MyCrawler extends WebCrawler {
              }
              if(!foundContiene) return false;
          }
+         
+         if(menu.isNoContiene)
+         {
+             String[] noContiene = menu.noContiene;
+             for(int i=0; i < noContiene.length; ++i)
+             {
+                 if(s.contains(noContiene[i])) return false;
+             }
+         }
+                  
          if(menu.isRegex)
          {
              Pattern regex = Pattern.compile(menu.regex);
              if(!regex.matcher(s).matches()) return false;
          }
-         if(menu.slash != -1)
-         {
-             String path = href.getPath();
-             int counter = 0;
-             for(int i = 0; i < path.length(); ++i)
-             {
-                 if(path.charAt(i) == '/') ++counter;
-             }
-             if(counter > menu.slash) return false;
-         }
          return true;
+     }
+     
+     public String tiempoEjecucion(Page p, mainMenu menu)
+     {
+         String s = "";
+         String idioma = "null";
+         String email = "null";
+         String url = p.getWebURL().getURL().toLowerCase();
+         String status = ""+p.getStatusCode();
+         if(!menu.isIdioma && !menu.isEmails)
+         {
+             menu.data.put(menu.enlacesAnalizados+1+"", new Object[]{url,status,idioma,email});
+             return "";
+         }
+         if(menu.isIdioma) idioma = algorithms.detectLanguage(p);
+         if(menu.isEmails) email = algorithms.getAllEmails(algorithms.detectEmails(p),menu) + "\n";
+         menu.data.put(menu.enlacesAnalizados+1+"", new Object[]{url,status,idioma,email});
+         return ("URL: " + p.getWebURL().getURL().toLowerCase() + "\nSTATUS: " + status + "\nIDIOMA: " + idioma +"\nEMAILS: " +email +"\n");
      }
 }

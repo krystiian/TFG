@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import main.mainMenu;
 import org.apache.tika.language.LanguageIdentifier;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -62,35 +63,39 @@ public class MyAlgorithms {
         Document document = Jsoup.parse(s);
         if(document.getElementsByAttribute("xml:lang").attr("xml:lang").length() > 0)
         {
-            System.out.print("xml:lang ");
+            //System.out.print("xml:lang ");
             return codeToLang(document.getElementsByAttribute("xml:lang").attr("xml:lang").substring(0, 2));
         }
         else if(document.getElementsByAttribute("lang").attr("lang").length() > 0 ) 
         {
-            System.out.print("lang ");
+            //System.out.print("lang ");
             return codeToLang(document.getElementsByAttribute("lang").attr("lang").toLowerCase().substring(0, 2));
         }
         else if(document.getElementsByTag("p").size() > 0)
         {
-            System.out.print("p ");
+            //System.out.print("p ");
             LanguageIdentifier languageIdentifier = new LanguageIdentifier(document.getElementsByTag("p").text().replaceAll("[^\\p{L}\\p{Nd}]+|[0-9]|\\s+", " "));
             return codeToLang(languageIdentifier.getLanguage());
         }
-        System.out.print("title ");
+        //System.out.print("title ");
         LanguageIdentifier languageIdentifier = new LanguageIdentifier(htmlParseData.getTitle().replaceAll("\\s+", " "));
         return codeToLang(languageIdentifier.getLanguage());
     }
     
-    public void printAllEmails(List l)
+    public String getAllEmails(List l, mainMenu m)
     {
+        String s = "";
         if(l.size() > 0)
+        {
+            m.emailsFetched += l.size();
             for(int i = 0; i < l.size(); ++i)
             {
-                System.out.print(l.get(i).toString());
-                if(i < l.size()-1) System.out.print(",");   
+                s += l.get(i).toString();
+                if(i < l.size()-1) s += (",");   
             }
-        else System.out.println("None");
-        System.out.println(""); 
+        }
+        else s = "null";
+        return s;
     }
     
     public String codeToLang(String code)
@@ -114,5 +119,30 @@ public class MyAlgorithms {
             return false;  
         }  
         return true;  
-    } 
+    }
+    
+    public boolean pageContainsContent(Page p,String[] s, boolean all, boolean atLeast , boolean none)
+    {
+        if(!(p.getParseData() instanceof HtmlParseData)) return false;
+        if(!(all || atLeast || none)) return true;
+        HtmlParseData htmlp = (HtmlParseData) p.getParseData();
+        String content = htmlp.getText().replaceAll("\\s+"," ").toLowerCase();
+        int found = 0;
+        for(int i = 0; i < s.length; ++i)
+        {
+            if(content.contains(s[i]))
+            {
+                if(none) return false;
+                else if(atLeast) return true;
+                ++found;
+            }
+        }
+        if(all)
+        {
+            if(found != s.length) return false;
+            else return true;
+        }
+        else if(atLeast) return false;
+        return true;
+    }
   }

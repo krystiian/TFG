@@ -12,6 +12,12 @@
     </Component>
     <Component class="javax.swing.ButtonGroup" name="buttonGroup5">
     </Component>
+    <Container class="javax.swing.JPopupMenu" name="jPopupMenu1">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+    </Container>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -61,17 +67,20 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="jLayeredPane2" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel9" min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="jLayeredPane2" min="-2" pref="232" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jLayeredPane2" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -82,21 +91,21 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="jLayeredPane3" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jToggleButton1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="jRadioButton6" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jLayeredPane1" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jLayeredPane3" alignment="0" max="32767" attributes="0"/>
+                          </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLayeredPane1" max="32767" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Component id="jLayeredPane4" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jButton1" max="32767" attributes="0"/>
-                                      <Component id="jToggleButton1" max="32767" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace pref="20" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="jLayeredPane6" max="32767" attributes="0"/>
+                              <Component id="jLayeredPane4" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -104,23 +113,24 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
+                                  <Component id="jLayeredPane6" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="jLayeredPane4" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="jLayeredPane3" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLayeredPane1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLayeredPane4" min="-2" max="-2" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jToggleButton1" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                                      </Group>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jToggleButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jRadioButton6" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Component id="jLayeredPane3" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -130,7 +140,7 @@
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                        <TitledBorder title="Par&#xe1;metros">
+                        <TitledBorder title="Crawling Parameters">
                           <Font PropertyName="font" name="Tahoma" size="12" style="1"/>
                         </TitledBorder>
                       </Border>
@@ -140,42 +150,29 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
                                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jTextField1" pref="140" max="32767" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jTextField1" max="32767" attributes="0"/>
                                   </Group>
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jRadioButton6" min="-2" max="-2" attributes="0"/>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jTextField3" min="-2" pref="25" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jTextField9" min="-2" pref="25" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jTextField4" min="-2" pref="50" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jTextField5" min="-2" pref="50" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jTextField3" min="-2" pref="25" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jTextField9" min="-2" pref="25" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jTextField5" min="-2" pref="30" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
+                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -191,24 +188,11 @@
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel2" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                                   <Component id="jTextField9" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jTextField4" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jTextField5" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jRadioButton6" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -217,7 +201,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JLabel" name="jLabel1">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Semilla"/>
+                        <Property name="text" type="java.lang.String" value="Seed"/>
                         <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Indica la p&#xe1;gina inicial en la que empezar&#xe1; el Crawling.&lt;br&gt;&lt;br&gt;&#xa;&#xa;Ejemplo:  http://www.upf.edu &lt;br&gt;&lt;br&gt;&#xa;&#xa;Separar por espacios las direcciones para obtener multiples p&#xe1;ginas como Semilla &lt;br&gt;&lt;br&gt;&#xa;&#xa;Ejemplo: http://www.upf.edu http://www.tecnonews.info&#xa;&lt;/html&gt;" noResource="true"/>
                         <Property name="name" type="java.lang.String" value="Semilla" noResource="true"/>
                       </Properties>
@@ -238,45 +222,30 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel2">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Profundidad"/>
-                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Indica el n&#xfa;mero m&#xe1;ximos de saltos que se har&#xe1;n desde la p&#xe1;gina seed.&lt;br&gt;&lt;br&gt;&#xa;&#xa;Si la profundidad es -1, se analizar&#xe1;n profundidades ilimitadas.&lt;br&gt;&#xa;Si la profundida es 0, solo se analizar&#xe1; la p&#xe1;gina Semilla.&lt;br&gt;&#xa;Si la profundidad es &gt;0 el m&#xe1;ximo recorrido para cada uno de los enalces de la p&#xe1;gina A ser&#xe1; el siguiente&lt;br&gt;&lt;br&gt;&#xa;&#xa;Ejemplo: Profundidad =  4&lt;br&gt;&#xa;&quot;A&quot; -&gt; &quot;B&quot; -&gt; &quot;C&quot; -&gt; &quot;D&quot; -&gt; &quot;E&quot;&lt;br&gt;&lt;br&gt;&#xa;&#xa;Siendo A la p&#xe1;gina Inicial&lt;br&gt;&#xa;Siendo B un enlace de la p&#xe1;gina A&lt;br&gt;&#xa;Siendo C un enlace de la p&#xe1;gina B&lt;br&gt;&#xa;Siendo D n enlace de la p&#xe1;gina C&lt;br&gt;&#xa;Siendo E un enlace de la p&#xe1;gina D&lt;br&gt;&lt;br&gt;&#xa;&#xa;Si la profundidad introducida no es un valor correcto se utilizar&#xe1; &quot;-1&quot;.&#xa;&lt;/html&gt;" noResource="true"/>
+                        <Property name="text" type="java.lang.String" value="Depth"/>
+                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Indica el n&#xfa;mero m&#xe1;ximos de saltos que se har&#xe1;n desde la p&#xe1;gina seed.&lt;br&gt;&lt;br&gt;&#xa;&#xa;Si la profundidad es -1, se analizar&#xe1;n profundidades ilimitadas.&lt;br&gt;&#xa;Si la profundida es 0, solo se analizar&#xe1; la p&#xe1;gina Semilla.&lt;br&gt;&#xa;Si la profundidad es &gt;0 el m&#xe1;ximo recorrido para cada uno de los enalces de la p&#xe1;gina A ser&#xe1; el siguiente&lt;br&gt;&lt;br&gt;&#xa;&#xa;Ejemplo: Profundidad =  4&lt;br&gt;&#xa;&quot;A&quot; -&gt; &quot;B&quot; -&gt; &quot;C&quot; -&gt; &quot;D&quot; -&gt; &quot;E&quot;&lt;br&gt;&lt;br&gt;&#xa;&#xa;Siendo A la p&#xe1;gina Inicial&lt;br&gt;&#xa;Siendo B un enlace de la p&#xe1;gina A&lt;br&gt;&#xa;Siendo C un enlace de la p&#xe1;gina B&lt;br&gt;&#xa;Siendo D n enlace de la p&#xe1;gina C&lt;br&gt;&#xa;Siendo E un enlace de la p&#xe1;gina D&lt;br&gt;&lt;br&gt;&#xa;&lt;/html&gt;" noResource="true"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel3">
                       <Properties>
                         <Property name="horizontalAlignment" type="int" value="2"/>
                         <Property name="text" type="java.lang.String" value="Crawlers"/>
-                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;N&#xfa;mero de procesos concurrentes del crawler que recopilar&#xe1;n informaci&#xf3;n. &lt;br&gt;&lt;br&gt;&#xa;&#xa;ejemplo: Crawlers = 5 &lt;br&gt;&lt;br&gt;&#xa;Se crear&#xe1;n 5 procesos que ir&#xe1;n recopilando informaci&#xf3;n. &lt;br&gt;&lt;br&gt;&#xa;&#xa;El valor m&#xed;nimo es 1. &lt;br&gt;&#xa;En caso de poner un valor incorrecto, se usar&#xe1;n 5 crawlers.&#xa;&lt;/html&gt;" noResource="true"/>
+                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;N&#xfa;mero de procesos concurrentes del crawler que recopilar&#xe1;n informaci&#xf3;n. &lt;br&gt;&lt;br&gt;&#xa;&#xa;ejemplo: Crawlers = 5 &lt;br&gt;&lt;br&gt;&#xa;Se crear&#xe1;n 5 procesos que ir&#xe1;n recopilando informaci&#xf3;n. &lt;br&gt;&lt;br&gt;&#xa;&#xa;El valor m&#xed;nimo es 1. &lt;br&gt;&#xa;&lt;/html&gt;" noResource="true"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="jTextField3">
                       <Properties>
-                        <Property name="horizontalAlignment" type="int" value="2"/>
+                        <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="text" type="java.lang.String" value="5"/>
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField3ActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel4">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Links M&#xe1;ximos"/>
-                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Enlaces m&#xe1;ximos que se analizar&#xe1;n &lt;br&gt;&lt;br&gt;&#xa;&#xa;Ejemplo: Links m&#xe1;ximos = 200&lt;br&gt;&#xa;Se analizar&#xe1;n 200 enlaces y el programa finalizar&#xe1;. &lt;br&gt;&#xa;&#xa;Si el valor introducido no es v&#xe1;lido, se analizar&#xe1;n 5000 enlaces.&lt;br&gt;&lt;br&gt;&#xa;&#xa;Introducir &quot;-1&quot; para analizar sin l&#xed;mite &lt;br&gt;&#xa;No es recomendable ya que pueden existir millones de enalces por analizar.&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField4">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="5000"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField4ActionPerformed"/>
-                      </Events>
-                    </Component>
                     <Component class="javax.swing.JLabel" name="jLabel5">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Tiempo (ms)"/>
-                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Tiempo entre llamadas a un servidor con el mismo host,  manera de respetar a terceros.&lt;br&gt;&lt;br&gt;&#xa;&#xa;Tiempo indicado en milisegundos.&lt;br&gt;&lt;br&gt;&#xa;&#xa;Valor m&#xed;nimo de ms es de 50ms.&lt;br&gt;&lt;br&gt;&#xa;Si el valor introducido es erroneo, se utilizar&#xe1;n 50ms.&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
+                        <Property name="text" type="java.lang.String" value="Time"/>
+                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Tiempo entre llamadas a un servidor con el mismo host,  manera de respetar a terceros.&lt;br&gt;&lt;br&gt;&#xa;&#xa;Tiempo indicado en milisegundos.&lt;br&gt;&lt;br&gt;&#xa;&#xa;Valor m&#xed;nimo de ms es de 50ms.&lt;br&gt;&lt;br&gt;&#xa;&lt;/html&gt;" noResource="true"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="jTextField5">
@@ -297,173 +266,13 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField9ActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JRadioButton" name="jRadioButton6">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Resumable"/>
-                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;Continuar analizando los enlaces de la &#xfa;ltima sesi&#xf3;n. &lt;br&gt;&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButton6ActionPerformed"/>
-                      </Events>
-                    </Component>
-                  </SubComponents>
-                </Container>
-                <Container class="javax.swing.JLayeredPane" name="jLayeredPane1">
-                  <Properties>
-                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                        <TitledBorder title="Condiciones de Enlace">
-                          <Font PropertyName="font" name="Tahoma" size="12" style="1"/>
-                        </TitledBorder>
-                      </Border>
-                    </Property>
-                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;Selecciona multiples opciones para realizar una b&#xfa;squeda m&#xe1;s compleja. &lt;br&gt;&#xa;&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
-                  </Properties>
-
-                  <Layout>
-                    <DimensionLayout dim="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jTextField8" max="32767" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jRadioButton3" min="-2" pref="21" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel7" min="-2" pref="48" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" attributes="0">
-                                              <Component id="jTextField7" max="32767" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" attributes="0">
-                                              <Component id="jTextField6" max="32767" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jTextField2" min="-2" pref="25" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                    <DimensionLayout dim="1">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jTextField8" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="jRadioButton3" min="-2" pref="21" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jTextField6" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jTextField7" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel9" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
-                                  <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                  </Layout>
-                  <SubComponents>
-                    <Component class="javax.swing.JLabel" name="jLabel6">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Contiene"/>
-                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;Solo se analizar&#xe1;n enlaces que contengan alguna de las palabras introducidas.&lt;br&gt;&#xa;&#xa;ejemplo: upf &lt;br&gt;&lt;br&gt;&#xa;&#xa;Si el enlace es: http://www.tecnonews.info     ,este no ser&#xe1; analizado &lt;br&gt;&#xa;Si el enlace es: http://www.upf.edu      ,este s&#xed; ser&#xe1; analizado&lt;br&gt;&lt;br&gt;&#xa;&#xa;Separar palabras por espacios para a&#xf1;adir mutiples palabras. &lt;br&gt;&lt;br&gt;&#xa;&#xa;ejemplo: upf secretaria &lt;br&gt;&lt;br&gt;&#xa;&#xa;Si el enlace es: http://www.upf.edu    , este no ser&#xe1; analizado &lt;br&gt;&#xa;Si el enalce es: http://www.upf.edu/test/secretaria/test    ,este si ser&#xe1; analizado &lt;br&gt;&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField6">
-                    </Component>
-                    <Component class="javax.swing.JRadioButton" name="jRadioButton3">
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButton3ActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel7">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="RegEx"/>
-                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;Solo analizar&#xe1; enlaces que cumplan con la expresi&#xf3;n regular introducita &lt;br&gt;&lt;br&gt;&#xa;&#xa;Ejemplo: .*(\u005c\u005c.(css))$ &lt;br&gt;&lt;br&gt;&#xa;&#xa;Analizar&#xe1; todos los enlaces que no terminen en .css&#xa;&#xa;&lt;/html&gt;" noResource="true" containsInvalidXMLChars="true"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField7">
-                    </Component>
-                    <Component class="javax.swing.JRadioButton" name="jRadioButton1">
-                    </Component>
-                    <Component class="javax.swing.JRadioButton" name="jRadioButton2">
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField8">
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField8ActionPerformed"/>
-                      </Events>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel8">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="URL"/>
-                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;Solo se analizar&#xe1;n enlaces que tenga la URL especificada. &lt;br&gt;&lt;br&gt;&#xa;&#xa;ejemplo: http://www.upf.edu&lt;br&gt;&lt;br&gt;&#xa;&#xa;Buscar&#xe1; enlaces que empiecen por: &lt;html&gt; &lt;br&gt;&lt;br&gt;&#xa;&#xa;http://www.upf.edu &lt;br&gt;&#xa;https://www.upf.edu &lt;br&gt;&#xa;www.upf.edu &lt;br&gt;&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel11">
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel9">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Max Slash"/>
-                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Analizar&#xe1; enlaces donde la cantidad de &quot;/&quot; del PATH del link no sea superior a este valor.&lt;br&gt;&lt;br&gt;&#xa;&#xa;Ejemplo: Max Slash = 3 &lt;br&gt;&lt;br&gt;&#xa;&#xa;Si el enlace es http://www.upf.edu/parte1/parte2/parte3 &lt;br&gt;&lt;br&gt;&#xa;&#xa;El PATH es /parte1/parte2/      , por lo tanto s&#xed; que se analizar&#xe1;.&lt;br&gt;&lt;br&gt;&#xa;&#xa;Si el enlace es http://www.upf.edu/parte1/parte2/parte3/parte4 &lt;br&gt;&lt;br&gt;&#xa;&#xa;El Path es /parte1/parte2/parte3/   , por lo tanto no se analizar&#xe1;. &lt;br&gt;&lt;br&gt;&#xa;&#xa;El valor -1 indicar&#xe1; que se analizar&#xe1;n ilimitados /&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="jTextField2">
-                      <Properties>
-                        <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="-1"/>
-                      </Properties>
-                    </Component>
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JLayeredPane" name="jLayeredPane4">
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                        <TitledBorder position="1" title="Analizar">
+                        <TitledBorder position="2" title="Analyse">
                           <Font PropertyName="font" name="Tahoma" size="12" style="1"/>
                         </TitledBorder>
                       </Border>
@@ -475,20 +284,23 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="jRadioButton4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jRadioButton5" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jRadioButton10" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="9" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jRadioButton4" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jRadioButton5" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jRadioButton10" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -497,36 +309,367 @@
                   <SubComponents>
                     <Component class="javax.swing.JRadioButton" name="jRadioButton4">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Idioma"/>
-                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Analiza el idioma de la p&#xe1;gina extraida &lt;br&gt;&#xa;&#xa;Buscar&#xe1; el tag &quot;lang&quot; o &quot;xml:lang&quot; de la p&#xe1;gina &lt;br&gt;&lt;br&gt;&#xa;Si la p&#xe1;gina no dispone de estos tags, se buscar&#xe1; un parrafo y se intentar&#xe1; identificar el Idioma a partir de ese texto. &lt;br&gt;&lt;br&gt;&#xa;&#xa;Si la p&#xe1;gina no dispone de ningun tag &quot;p&quot;, se coger&#xe1; el t&#xed;tulo y har&#xe1; esa misma acci&#xf3;n &lt;br&gt;&#xa;&#xa;&lt;/html&gt;&#xa;" noResource="true"/>
+                        <Property name="text" type="java.lang.String" value="Lang"/>
+                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;Analizar&#xe1; el idioma de las p&#xe1;ginas consideradas v&#xe1;lidas&lt;br&gt;&lt;br&gt;&#xa;&#xa;METODOLOG&#xcd;A&lt;br&gt;&#xa;Buscar&#xe1; el tag &quot;lang&quot; o &quot;xml:lang&quot; de la p&#xe1;gina `(muy fiable)&lt;br&gt;&lt;br&gt;&#xa;Si la p&#xe1;gina no dispone de estos tags, se buscar&#xe1; un parrafo y se intentar&#xe1; identificar el Idioma a partir de ese texto.(fiable)&lt;br&gt;&lt;br&gt;&#xa;Si la p&#xe1;gina no dispone de ningun tag &quot;p&quot;, se coger&#xe1; el t&#xed;tulo y har&#xe1; esa misma acci&#xf3;n(muy poco fiable)&#xa;&lt;/html&gt;&#xa;" noResource="true"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JRadioButton" name="jRadioButton5">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Emails"/>
-                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;Recopilar&#xe1; todos los emails del enlace.&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
+                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;Recopilar&#xe1; todos los emails contenidos en las p&#xe1;ginas v&#xe1;lidas.&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
                       </Properties>
+                    </Component>
+                    <Component class="javax.swing.JRadioButton" name="jRadioButton10">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Broken"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButton10ActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
                 <Component class="javax.swing.JToggleButton" name="jToggleButton1">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Start"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;Start: Inicia el Crawling &lt;br&gt;&lt;br&gt;&#xa;&#xa;Stop: Detiene el Crawling pasado 10segundos &lt;br&gt;&lt;br&gt;&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButton1ActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton1">
+                <Container class="javax.swing.JLayeredPane" name="jLayeredPane1">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Exit"/>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="Link Requirements">
+                          <Font PropertyName="font" name="Tahoma" size="12" style="1"/>
+                        </TitledBorder>
+                      </Border>
+                    </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;Selecciona multiples opciones para realizar una b&#xfa;squeda m&#xe1;s compleja. &lt;br&gt;&#xa;&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
+                  </Properties>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jRadioButton2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jRadioButton7" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jRadioButton1" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                                              <Component id="jTextField6" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Component id="jTextField7" max="32767" attributes="0"/>
+                                                  <Component id="jTextField4" max="32767" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jTextField6" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="jTextField7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="jTextField4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="28" pref="28" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="jRadioButton7" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JLabel" name="jLabel6">
+                      <Properties>
+                        <Property name="horizontalAlignment" type="int" value="0"/>
+                        <Property name="text" type="java.lang.String" value="Contains"/>
+                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;Solo seran v&#xe1;lidos los enlaces que contengan ALMENOS UNA de las palabras introducidas.&lt;br&gt;&lt;br&gt;&#xa;&#xa;ejemplo: upf &lt;br&gt;&lt;br&gt;&#xa;&#xa;Si el enlace es: http://www.tecnonews.info     ,este no ser&#xe1; v&#xe1;lido &lt;br&gt;&#xa;Si el enlace es: http://www.upf.edu      ,este s&#xed; ser&#xe1; v&#xe1;lido&lt;br&gt;&lt;br&gt;&#xa;&#xa;Separar palabras por espacios para a&#xf1;adir mutiples palabras. &lt;br&gt;&lt;br&gt;&#xa;&#xa;ejemplo: upf secretaria &lt;br&gt;&lt;br&gt;&#xa;&#xa;Si el enlace es: http://www.upf.edu    , este si ser&#xe1; v&#xe1;lido &lt;br&gt;&#xa;Si el enalce es: http://www.upf.edu/test/secretaria/test    ,este si ser&#xe1; v&#xe1;lido &lt;br&gt;&#xa;Si el enlace es: http://www.tecnonews.com   ,este no ser&#xe1; v&#xe1;lido.&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="jTextField6">
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel7">
+                      <Properties>
+                        <Property name="horizontalAlignment" type="int" value="0"/>
+                        <Property name="text" type="java.lang.String" value="RegEx"/>
+                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;Solo seran v&#xe1;lidos aquellos enlaces que cumplan con la expresi&#xf3;n regular introducita &lt;br&gt;&lt;br&gt;&#xa;&#xa;Ejemplo: .*(\u005c\u005c.(css))$ &lt;br&gt;&lt;br&gt;&#xa;&#xa;Todos los enlaces que no terminen en .css ser&#xe1;n v&#xe1;lidos.&#xa;&#xa;&lt;/html&gt;" noResource="true" containsInvalidXMLChars="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="jTextField7">
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel11">
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel4">
+                      <Properties>
+                        <Property name="horizontalAlignment" type="int" value="0"/>
+                        <Property name="text" type="java.lang.String" value="Avoid  "/>
+                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;Solo ser&#xe1;n v&#xe1;lidos aquellos enlaces que no contengan ninguna de las palabras introducidas.&lt;br&gt;&lt;br&gt;&#xa;&#xa;ejemplo: upf &lt;br&gt;&lt;br&gt;&#xa;&#xa;Si el enlace es: http://www.tecnonews.info     ,este ser&#xe1; v&#xe1;lido &lt;br&gt;&#xa;Si el enlace es: http://www.upf.edu      ,este no ser&#xe1; v&#xe1;lido&lt;br&gt;&lt;br&gt;&#xa;&#xa;Separar palabras por espacios para a&#xf1;adir mutiples palabras. &lt;br&gt;&lt;br&gt;&#xa;&#xa;ejemplo: upf secretaria &lt;br&gt;&lt;br&gt;&#xa;&#xa;Si el enlace es: http://www.upf.edu    , este no ser&#xe1; v&#xe1;lido &lt;br&gt;&#xa;Si el enalce es: http://www.tecnonews.info    ,este si ser&#xe1; v&#xe1;lido &lt;br&gt;&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="jTextField4">
+                    </Component>
+                    <Component class="javax.swing.JRadioButton" name="jRadioButton1">
+                    </Component>
+                    <Component class="javax.swing.JRadioButton" name="jRadioButton2">
+                    </Component>
+                    <Component class="javax.swing.JRadioButton" name="jRadioButton7">
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Component class="javax.swing.JRadioButton" name="jRadioButton6">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Resumable"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;Si activamos esta opci&#xf3;n antes de pulsar START, guardaremos los enlaces&lt;br&gt;&#xa;TEMPORALES que se han obtenido durante esta sesi&#xf3;n. ESTA OPCI&#xd3;N REALENTIZA EL PROCESO&lt;br&gt;&lt;br&gt;&#xa;&#xa;Si antes de iniciar la proxima sesion de crawling, activamos el Resumable,&lt;br&gt;&#xa;se continuaran analizando los enlaces que se obtuvieron en la sesi&#xf3;n previa. &lt;br&gt;(unicamente si la opci&#xf3;n tambien estuvo activa)&lt;br&gt;&lt;br&gt;&#xa;&#xa;En caso de no activar el Resumable antes del inicio de una sesion,&lt;br&gt;se borrar&#xe1; aquella informaci&#xf3;n temporal.&lt;br&gt;&lt;br&gt;&#xa;&#xa;Es una opcion &#xfa;til pero NO RECOMENDADA&#xa;&#xa;&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButton6ActionPerformed"/>
+                  </Events>
+                </Component>
+                <Container class="javax.swing.JLayeredPane" name="jLayeredPane6">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="Content Requirements">
+                          <Font PropertyName="font" name="Tahoma" size="12" style="1"/>
+                        </TitledBorder>
+                      </Border>
+                    </Property>
+                  </Properties>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="jRadioButton8" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Component id="jTextField2" max="32767" attributes="0"/>
+                                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jRadioButton9" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jRadioButton3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jRadioButton8" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jRadioButton3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jRadioButton9" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JTextField" name="jTextField2">
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField2ActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel8">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Contains"/>
+                        <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;Solo ser&#xe1;n v&#xe1;lidos aquellos enlaces que su contenido cumpla con lo indicado.&lt;br&gt;&lt;br&gt;&#xa;&#xa;At least one : Almenos uno de los terminos listados se encuentra en la p&#xe1;gina &lt;br&gt;&lt;br&gt;&#xa;&#xa;All: Todos los terminos listados se encuentran en la p&#xe1;gina &lt;br&gt;&lt;br&gt;&#xa;&#xa;None: Ninguno de los terminos listados se encuentra en la p&#xe1;gina &lt;br&gt;&lt;br&gt;&#xa;&#xa;&lt;/html&gt;" noResource="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JRadioButton" name="jRadioButton3">
+                      <Properties>
+                        <Property name="model" type="javax.swing.ButtonModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                          <ComponentRef name="default"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="None"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButton3ActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JRadioButton" name="jRadioButton8">
+                      <Properties>
+                        <Property name="model" type="javax.swing.ButtonModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                          <ComponentRef name="default"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="At least one"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButton8ActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JRadioButton" name="jRadioButton9">
+                      <Properties>
+                        <Property name="model" type="javax.swing.ButtonModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                          <ComponentRef name="default"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="All"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButton9ActionPerformed"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JLabel" name="jLabel9">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="0" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="24" style="3"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="cc" green="0" red="0" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="?"/>
+                <Property name="toolTipText" type="java.lang.String" value="&lt;html&gt;&#xa;&#xa;&lt;b&gt;CRAWLING PARAMETERS&lt;/b&gt; &lt;hr&gt;&lt;br&gt;&#xa;&#xa;Indicar&#xe1; la l&#xf3;gica del comportamiento que serguir&#xe1; el Crawler.&lt;br&gt;&lt;br&gt;&#xa;&#xa;&lt;b&gt; SEED &lt;/b&gt; ser&#xe1; la p&#xe1;gina inicial sobre la cual empezar&#xe1; a recopilar enlaces&lt;br&gt;&#xa;&lt;b&gt; CRAWELERS &lt;/b&gt; cantidad de procesos concurrentes&lt;br&gt;&#xa;&lt;b&gt; DEEP &lt;/b&gt; Saltos m&#xe1;ximos que se realizar&#xe1;n desde la p&#xe1;gina(s) seed.&lt;br&gt;&#xa;&lt;b&gt; TIME &lt;/b&gt; Tiempo entre llamadas a los enlaces.&lt;br&gt;&#xa;&#xa;&lt;br&gt;&#xa;&lt;b&gt;LINK REQUIREMENTS&lt;/b&gt;&lt;hr&gt;&lt;br&gt;&#xa;&#xa;Indica la l&#xf3;gica de que enlace puede ser v&#xe1;lido o no serlo.&lt;br&gt;&#xa;&lt;b&gt;&lt;i&gt;esta l&#xf3;gica actua sobre el enlace, no sobre el contenido de este.&lt;/b&gt;&lt;/i&gt;&lt;br&gt;&#xa;Para que un enlace se considere v&#xe1;lido a nivel de enlace, debe cumplir con&lt;br&gt;&#xa;las condiciones que se han escogido.&lt;br&gt;&lt;br&gt;&#xa;&#xa;&lt;b&gt;CONTAINS&lt;/b&gt; El enlace ser&#xe1; valido si alguno de los terminos aparece en el enlace&lt;br&gt;&#xa;&lt;b&gt;REGEX&lt;/b&gt; El enlace ser&#xe1; valido si cumple con la expresi&#xf3;n regular indicada&lt;br&gt;&#xa;&lt;b&gt;AVOID&lt;/b&gt; El enlace ser&#xe1; valido si no ningun termino aparece en &#xe9;l&lt;br&gt;&lt;br&gt;&#xa;&#xa;&lt;u&gt;Estas condiciones son acumulativas,es decir, el enlace deber&#xe1; cumplir con todas&lt;br&gt;&#xa;las condiciones indicas para considerarse como enlace v&#xe1;lido.&lt;/u&gt;&lt;br&gt;&lt;br&gt;&#xa;&#xa;&lt;b&gt;CONTENT REQUIREMENTS&lt;/b&gt;&lt;hr&gt;&lt;br&gt;&#xa;&#xa;Indica la l&#xf3;gica de que el contenido de un enlace sea v&#xe1;lido o no.&lt;br&gt;&#xa;&lt;b&gt;&lt;i&gt;esta l&#xf3;gica act&#xfa;a sobre el contenido del enlace&lt;/b&gt;&lt;/i&gt;&lt;br&gt;&#xa;Para que un enlace se considere v&#xe1;lido a nivel de contenido, este debe cumplir con&lt;br&gt;&#xa;la condici&#xf3;n escogida.&lt;br&gt;&lt;br&gt;&#xa;&#xa;&lt;b&gt;At Least One&lt;/b&gt; Ser&#xe1; v&#xe1;lido si aparece almenos uno de los terminos en el contenido&lt;br&gt;&#xa;&lt;b&gt;All&lt;/b&gt; Ser&#xe1; v&#xe1;lido si aparece todos los terminos en el contenido&lt;br&gt;&#xa;&lt;b&gt;None&lt;/b&gt; Ser&#xe1; v&#xe1;lido si no aparece ninguno de los terminos en el contenido&lt;br&gt;&lt;br&gt;&#xa;&#xa;&lt;u&gt;&lt;i&gt; UN ENLACE SER&#xc1; VALIDO SI Y SOLO SI, CUMPLE CON TODAS LAS CONDICIONES&lt;br&gt; TANTO A NIVEL DE ENLACE COMO DE CONTENIDO&lt;/u&gt;&lt;/i&gt;&lt;br&gt;&lt;br&gt;&#xa;&#xa;&#xa;&lt;b&gt;ANALISY&lt;b&gt;&lt;br&gt;&lt;hr&gt;&lt;br&gt;&#xa;&#xa;Logica encargada de analizar los enlaces &lt;b&gt;VALIDOS&lt;/b&gt;&lt;br&gt;&lt;br&gt;&#xa;&#xa;&lt;b&gt;EMAILS&lt;/b&gt; Recopila todos los emails del enlace considerado VALIDO&lt;br&gt;&#xa;&lt;b&gt;IDIOMA&lt;/b&gt; Dictamina en que lengua se encuentra la p&#xe1;gina &lt;br&gt;&#xa;&#xa;&lt;/html" noResource="true"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JLayeredPane" name="jLayeredPane5">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="CONSOLE">
+                <Property name="tabTitle" type="java.lang.String" value="CONSOLE"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="jScrollPane2" pref="482" max="32767" attributes="0"/>
+                  <Component id="jTextField10" alignment="0" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jScrollPane2" pref="230" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jTextField10" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTextArea" name="jTextArea2">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="0" red="0" type="rgb"/>
+                    </Property>
+                    <Property name="columns" type="int" value="20"/>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Consolas" size="12" style="1"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="33" green="ff" red="33" type="rgb"/>
+                    </Property>
+                    <Property name="rows" type="int" value="5"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTextArea2MouseClicked"/>
                   </Events>
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JTextField" name="jTextField10">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="0" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Consolas" size="11" style="1"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="33" green="ff" red="33" type="rgb"/>
+                </Property>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField10ActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>

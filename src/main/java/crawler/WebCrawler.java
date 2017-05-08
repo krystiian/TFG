@@ -17,9 +17,12 @@
 
 package crawler;
 
+import extract_data.MyCrawler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Pattern;
+import main.mainMenu;
 import org.apache.http.HttpStatus;
 import org.apache.http.impl.EnglishReasonPhraseCatalog;
 import org.slf4j.Logger;
@@ -33,7 +36,7 @@ import org.slf4j.LoggerFactory;
  */
 public class WebCrawler implements Runnable {
     protected static final Logger logger = LoggerFactory.getLogger(WebCrawler.class);
-
+    
     /**
      * The id associated to the crawler thread running this instance
      */
@@ -354,9 +357,10 @@ public class WebCrawler implements Runnable {
                                  EnglishReasonPhraseCatalog.INSTANCE.getReason(statusCode,
                                                                                Locale.ENGLISH));
             // Finds the status reason for all known statuses
-
+            
             Page page = new Page(curURL);
             page.setFetchResponseHeaders(fetchResult.getResponseHeaders());
+            mainMenu menu = getMyController().menu;
             page.setStatusCode(statusCode);
             if (statusCode < 200 ||
                 statusCode > 299) { // Not 2XX: 2XX status codes indicate success
@@ -367,12 +371,17 @@ public class WebCrawler implements Runnable {
                     statusCode == HttpStatus.SC_TEMPORARY_REDIRECT ||
                     statusCode == 308) { // is 3xx  todo
                     // follow https://issues.apache.org/jira/browse/HTTPCORE-389
-
                     page.setRedirect(true);
 
                     String movedToUrl = fetchResult.getMovedToUrl();
                     if (movedToUrl == null) {
-                        logger.warn("Unexpected error, URL: {} is redirected to NOTHING",
+                       
+                    if(isUnderCondition(menu, curURL) && menu.isBroken)
+                    {
+                        menu.enlacesErroneos += 1;
+                        menu.setTextStats(menu.enlacesTotales + " ENLACES   |   " + menu.enlacesValidos + " VALIDOS   |   " + menu.enlacesAnalizados + " ANALIZADOS  |  " + menu.enlacesErroneos + " ERROR  |  " + menu.emailsFetched + " EMAILS");
+                        menu.writeConsole(curURL.getParentUrl() + "  ---->  " + curURL.getURL() + " : " + fetchResult.getStatusCode() + "Redirect \n");
+                    }logger.warn("Unexpected error, URL: {} is redirected to NOTHING",
                                     curURL);
                         return;
                     }
@@ -417,6 +426,13 @@ public class WebCrawler implements Runnable {
                                          fetchResult.getEntity().getContentType().getValue();
                     onUnexpectedStatusCode(curURL.getURL(), fetchResult.getStatusCode(),
                                            contentType, description);
+                    
+                    if(isUnderCondition(menu, curURL) && menu.isBroken)
+                    {
+                        menu.enlacesErroneos += 1;
+                        menu.setTextStats(menu.enlacesTotales + " ENLACES   |   " + menu.enlacesValidos + " VALIDOS   |   " + menu.enlacesAnalizados + " ANALIZADOS  |  " + menu.enlacesErroneos + " ERROR  |  " + menu.emailsFetched + " EMAILS");
+                        menu.writeConsole(curURL.getParentUrl() + "  ---->  " + curURL.getURL() + " : " + fetchResult.getStatusCode() + "\n");
+                    }
                 }
 
             } else { // if status code is 200
@@ -525,4 +541,44 @@ public class WebCrawler implements Runnable {
     public boolean isNotWaitingForNewURLs() {
         return !isWaitingForNewURLs;
     }
+    
+    public Boolean isUnderCondition(mainMenu menu, WebURL href)
+     {
+         String s = href.getURL().toLowerCase();
+         if(menu.isContiene)
+         {
+             boolean foundContiene = false;
+             String[] contiene = menu.contiene;
+             for(int i=0; i < contiene.length; ++i)
+             {
+                 if(s.contains(contiene[i])) foundContiene = true;
+             }
+             if(!foundContiene) return false;
+         }
+         
+         if(menu.isNoContiene)
+         {
+             String[] noContiene = menu.noContiene;
+             for(int i=0; i < noContiene.length; ++i)
+             {
+                 if(s.contains(noContiene[i])) return false;
+             }
+         }
+         
+         if(menu.isRegex)
+         {
+             Pattern regex = Pattern.compile(menu.regex);
+             if(!regex.matcher(s).matches()) return false;
+         }
+         return true;
+     }
+    
+    public String removePrefix(String url)
+     {
+        if(url.startsWith("http://")) url = url.replace("http://","");
+        else if(url.startsWith("http:\\\\"))url = url.replace("http:\\\\","");
+        else if(url.startsWith("https://")) url = url.replace("https://","");
+        else if(url.startsWith("https:\\\\"))url = url.replace("https:\\\\","");
+        return url;
+     }
 }
